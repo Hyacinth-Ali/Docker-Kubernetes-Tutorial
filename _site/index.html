@@ -106,13 +106,13 @@
 <p>Docker supports several IDEs. You are encouraged to use any IDE of your choice. However, for consistency, we use <a href="https://code.visualstudio.com">Microsoft Visual Studio</a> throughout this tutorial.</p>
 
 <h3 id="download-and-run-sample-project">Download and Run Sample Project</h3>
-<ol>
+<ul>
   <li>Clone the sample <a href="https://github.com/Hyacinth-Ali/Docker-Kubernetes-Tutorial">projects</a>: Navigate to the folder <em>getting-started-demo-app</em>, which contains the source code for this quick demo. Open the folder with your IDE, and you will see a very simple <strong>Hello World</strong> NodeJS application, as shown below. <br /></li>
-</ol>
+</ul>
 
 <p><img src="/assets/images/getting-started-node-app.png" alt="Getting Started Demo App" style="width:100%;" /></p>
 
-<ol>
+<ul>
   <li>To run the application without docker; follow the steps below:
     <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm install
 node app.js
@@ -123,14 +123,14 @@ node app.js
     </blockquote>
   </li>
   <li>Open your web browser and then navigate to <a href="http://localhost:3000">http://localhost:3000</a> to visualize the response of the server.</li>
-</ol>
+</ul>
 
 <h3 id="quick-dive-into-docker-and-container">Quick Dive into Docker and Container</h3>
 <p>Here, we containerize the application and then start the container.</p>
-<ol>
+<ul>
   <li>Create a file at the root project and name it <em>Dockerfile</em></li>
   <li>Enter the following set of instructions in the file.</li>
-</ol>
+</ul>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">FROM</span> <span class="nx">node</span><span class="p">:</span><span class="mi">14</span> 
 
@@ -146,14 +146,14 @@ node app.js
 
 <span class="nx">CMD</span> <span class="p">[</span> <span class="dl">"</span><span class="s2">node</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">app.js</span><span class="dl">"</span> <span class="p">]</span>
 </code></pre></div></div>
-<ol>
+<ul>
   <li>Open a terminal and then navigate to the root project.</li>
   <li>Build the image, i.e., create a Docker image based on the <em>Dockerfile</em></li>
-</ol>
+</ul>
 
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">docker build -t demo-image .
 </span></code></pre></div></div>
-<ol>
+<ul>
   <li>List existing images to see the new image (demo-image)
     <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker images
 </code></pre></div>    </div>
@@ -166,47 +166,81 @@ node app.js
     <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker ps
 </code></pre></div>    </div>
   </li>
+</ul>
+
+<h2 id="section-2-the-main-building-blocks-dockerfile-image-and-container">Section 2: The Main Building Blocks (Dockerfile, Image, and Container)</h2>
+<p>Here, we will walk through the steps to containerize a software application with emphasizes on the core building blocks: Dockerfile, Image, and Container.</p>
+
+<h4 id="dockerfile">Dockerfile</h4>
+<p>A Dockerfile is a configuration file, which can be used to create a Docker image. It comprises a set of instructions that when executed creates an image. Here, we provide a brief explanation of the instructions we used already to create an image with a <em>Dockerfile</em></p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">FROM</span> <span class="nx">node</span><span class="p">:</span><span class="mi">14</span> 
+</code></pre></div></div>
+<ol>
+  <li>Here we specify the base image (<em>node</em> image, version:14). The base image provides underlying OS architecture and other packages that are required to run our application.</li>
 </ol>
 
-<h3 id="section-2-building-blocks-of-a-conatiner">Section 2: Building Blocks of a Conatiner</h3>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam pretium orci eu lorem feugiat aliquet. Fusce massa erat, vehicula sed libero sed, aliquam elementum nisi.</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">WORKDIR</span> <span class="o">/</span><span class="nx">app</span>
+</code></pre></div></div>
+<ol>
+  <li>This instruction specifies the root directory for the image. Hence, all the contents of the image will stored in an <em>app</em> folder.</li>
+</ol>
 
-<h4 id="introduction-to-dockerfile-images-and-containers">Introduction to Dockerfile, Images, and Containers</h4>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam pretium orci eu lorem feugiat aliquet. Fusce massa erat, vehicula sed libero sed, aliquam elementum nisi. Sed vitae est sapien. In consectetur hendrerit nisl. Nulla pulvinar aliquet est maximus ultricies. Curabitur finibus elit ligula, eget hendrerit nisi auctor at. In vestibulum eros ac tristique molestie. Mauris condimentum felis eget diam malesuada luctus. Suspendisse orci justo, tincidunt quis tempor eget, finibus non turpis. Aenean et vulputate velit, vel molestie magna. Donec non elit id lacus facilisis commodo.</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">COPY</span> <span class="kr">package</span><span class="o">*</span><span class="p">.</span><span class="nx">json</span> <span class="o">/</span><span class="nx">app</span>
+</code></pre></div></div>
+<ol>
+  <li>This instruction copies all the files with the name <em>package*.json</em> to the root directory of image. In our example, both package.json and ackage-lock.json will be copied to oot tdirecory of the image.</li>
+</ol>
 
-<h4 id="using-external-images">Using External Images</h4>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam pretium orci eu lorem feugiat aliquet. Fusce massa erat, vehicula sed libero sed, aliquam elementum nisi. Sed vitae est sapien. In consectetur hendrerit nisl. Nulla pulvinar aliquet est maximus ultricies. Curabitur finibus elit ligula, eget hendrerit nisi auctor at. In vestibulum eros ac tristique molestie. Mauris condimentum felis eget diam malesuada luctus. Suspendisse orci justo, tincidunt quis tempor eget, finibus non turpis. Aenean et vulputate velit, vel molestie magna. Donec non elit id lacus facilisis commodo.</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">RUN</span> <span class="nx">npm</span> <span class="nx">install</span>
+</code></pre></div></div>
+<p>This instruction installs all the dependencies that are specified in our .json file. Remember that we had to run <code class="language-plaintext highlighter-rouge">npm install</code> before running our application.</p>
 
-<h4 id="creating-our-own-images">Creating our Own Images</h4>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam pretium orci eu lorem feugiat aliquet. Fusce massa erat, vehicula sed libero sed, aliquam elementum nisi. Sed vitae est sapien. In consectetur hendrerit nisl. Nulla pulvinar aliquet est maximus ultricies. Curabitur finibus elit ligula, eget hendrerit nisi auctor at. In vestibulum eros ac tristique molestie. Mauris condimentum felis eget diam malesuada luctus. Suspendisse orci justo, tincidunt quis tempor eget, finibus non turpis. Aenean et vulputate velit, vel molestie magna. Donec non elit id lacus facilisis commodo.</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">COPY</span> <span class="p">.</span> <span class="p">.</span>
+</code></pre></div></div>
+<p>Here, we copy all contents from the folder that contains the <em>Dockerfile</em>, i.e., the root directory of our project and it is represented as a dot. However, the <em>Dockerfile</em> is not copied though. The second dot is the destination folder inside the image. Similarly, the dot implies that the copied contents will be stores in the root directory (or /app) of the image.</p>
 
-<h4 id="instantiating-images-creating-containers">Instantiating Images (Creating Containers)</h4>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam pretium orci eu lorem feugiat aliquet. Fusce massa erat, vehicula sed libero sed, aliquam elementum nisi. Sed vitae est sapien. In consectetur hendrerit nisl. Nulla pulvinar aliquet est maximus ultricies. Curabitur finibus elit ligula, eget hendrerit nisi auctor at. In vestibulum eros ac tristique molestie. Mauris condimentum felis eget diam malesuada luctus. Suspendisse orci justo, tincidunt quis tempor eget, finibus non turpis. Aenean et vulputate velit, vel molestie magna. Donec non elit id lacus facilisis commodo.</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">EXPOSE</span> <span class="mi">3000</span>
+</code></pre></div></div>
+<p>This instruction simply exposes poprt 3000 so that we can reeach the application from outside the container.</p>
 
-<h4 id="managing-images">Managing Images</h4>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">CMD</span> <span class="p">[</span> <span class="dl">"</span><span class="s2">node</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">app.js</span><span class="dl">"</span> <span class="p">]</span>
+</code></pre></div></div>
+<p>Finally, this instruction runs the containerized application.</p>
+
+<h3 id="image">Image</h3>
+<p>An image contains everything required to run an application, including application code, dependencies, libraries, configuirations, and scripts. Also, an image contains other commands for running a container, e.g., <code class="language-plaintext highlighter-rouge">CMD [ "node", "app.js" ]</code> is a command to run the containerized node application. To create an image, we run the command below:</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">docker</span> <span class="nx">build</span> <span class="o">-</span><span class="nx">t</span> <span class="nx">demo</span><span class="o">-</span><span class="nx">image</span> <span class="p">.</span>
+</code></pre></div></div>
+<p>This command downloads all the required images, e.g., the node base image, if they are not yet cached locally in our system. In addition, the command executes all the instructions that are contained in <em>Dockerfile</em> except some commands that are required to run the container, e.g., <code class="language-plaintext highlighter-rouge">CMD [ "node", "app.js" ]</code>. The flag <code class="language-plaintext highlighter-rouge">-t</code> tags our image with a name (demo-image). The demo-image can then be used to refrence the image when we run containers based on the image. And finally, the <code class="language-plaintext highlighter-rouge">.</code> informs Docker to look for the <em>Dockerfile</em> at the root directory of our project.</p>
+
+<h3 id="container">Container</h3>
+<p>A container is an independent runnable instance of an image. A container is light weight, fast, portable, and platform indepenent, to name a few. We can run several containers from an image; however, they are independent and each runs in an isolation.</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">docker</span> <span class="nx">run</span> <span class="o">-</span><span class="nx">p</span> <span class="mi">3000</span><span class="p">:</span><span class="mi">3000</span> <span class="nx">demo</span><span class="o">-</span><span class="nx">image</span>
+</code></pre></div></div>
+<p>This <strong>docker run</strong> command instantiates an image, i.e., it creates a new container from the <strong>demo-image</strong>. The <code class="language-plaintext highlighter-rouge">-p</code> exposes port 3000 (the first 3000) from port 3000 (the second 3000), which is inside the container. Remeber that we specify in the <em>Dockerfile</em> that the application exposes port 3000. Note that both the inner port and outer port can have different values.</p>
+
+<h3 id="external-images">External Images</h3>
+<p>Instead of creating our own image, we can run a container based on external image. A Docker Hub is an image registory which stores repositories of images. These images can be pulled to our local and then used to start a container. An example is demonstrated below.</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">docker</span> <span class="nx">run</span> <span class="o">-</span><span class="nx">it</span> <span class="nx">node</span>
+</code></pre></div></div>
+<p>Remeber that <code class="language-plaintext highlighter-rouge">docker run</code> creates a new container based on an image. In this example, we using the <em>node</em> image, which we do not have locally. As a result, Docker pulls the image from the Docker Hub and then create a new container based onn the image. The <code class="language-plaintext highlighter-rouge">-it</code> tells Docker expose an interactive shell from inside the node container to our local machine so that we can interact with the running container.</p>
+
+<h3 id="managing-images">Managing Images</h3>
+
 <ol>
   <li>
-    <p>Naming images <br />
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam pretium orci eu lorem feugiat aliquet. Fusce massa erat, vehicula sed libero sed, aliquam elementum nisi. Sed vitae est sapien. In consectetur hendrerit nisl. Nulla pulvinar aliquet est maximus ultricies. Curabitur finibus elit ligula, eget hendrerit nisi auctor at. In vestibulum eros ac tristique molestie. Mauris condimentum felis eget diam malesuada luctus. Suspendisse orci justo, tincidunt quis tempor eget, finibus non turpis. Aenean et vulputate velit, vel molestie magna. Donec non elit id lacus facilisis commodo.</p>
+    <p>Listing existing images <br /></p>
   </li>
   <li>
-    <p>Listing existing images <br />
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam pretium orci eu lorem feugiat aliquet. Fusce massa erat, vehicula sed libero sed, aliquam elementum nisi. Sed vitae est sapien. In consectetur hendrerit nisl. Nulla pulvinar aliquet est maximus ultricies. Curabitur finibus elit ligula, eget hendrerit nisi auctor at. In vestibulum eros ac tristique molestie. Mauris condimentum felis eget diam malesuada luctus. Suspendisse orci justo, tincidunt quis tempor eget, finibus non turpis. Aenean et vulputate velit, vel molestie magna. Donec non elit id lacus facilisis commodo.</p>
+    <p>Inspecting Images <br /></p>
   </li>
   <li>
-    <p>Inspecting Images <br />
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam pretium orci eu lorem feugiat aliquet. Fusce massa erat, vehicula sed libero sed, aliquam elementum nisi. Sed vitae est sapien. In consectetur hendrerit nisl. Nulla pulvinar aliquet est maximus ultricies. Curabitur finibus elit ligula, eget hendrerit nisi auctor at. In vestibulum eros ac tristique molestie. Mauris condimentum felis eget diam malesuada luctus. Suspendisse orci justo, tincidunt quis tempor eget, finibus non turpis. Aenean et vulputate velit, vel molestie magna. Donec non elit id lacus facilisis commodo.</p>
-  </li>
-  <li>
-    <p>Removing Images <br />
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam pretium orci eu lorem feugiat aliquet. Fusce massa erat, vehicula sed libero sed, aliquam elementum nisi. Sed vitae est sapien. In consectetur hendrerit nisl. Nulla pulvinar aliquet est maximus ultricies. Curabitur finibus elit ligula, eget hendrerit nisi auctor at. In vestibulum eros ac tristique molestie. Mauris condimentum felis eget diam malesuada luctus. Suspendisse orci justo, tincidunt quis tempor eget, finibus non turpis. Aenean et vulputate velit, vel molestie magna. Donec non elit id lacus facilisis commodo.</p>
+    <p>Removing Images <br /></p>
   </li>
 </ol>
 
-<h4 id="managing-containers">Managing Containers</h4>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam pretium orci eu lorem feugiat aliquet. Fusce massa erat, vehicula sed libero sed, aliquam elementum nisi. Sed vitae est sapien. In consectetur hendrerit nisl. Nulla pulvinar aliquet est maximus ultricies. Curabitur finibus elit ligula, eget hendrerit nisi auctor at. In vestibulum eros ac tristique molestie. Mauris condimentum felis eget diam malesuada luctus. Suspendisse orci justo, tincidunt quis tempor eget, finibus non turpis. Aenean et vulputate velit, vel molestie magna. Donec non elit id lacus facilisis commodo.</p>
-
-<h2 id="module-2---kubernetes">Module 2 - Kubernetes</h2>
+<h3 id="managing-containers">Managing Containers</h3>
 
           <!-- <footer>
             <a
