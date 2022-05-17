@@ -105,8 +105,68 @@
 <h3 id="ide-installation">IDE Installation</h3>
 <p>Docker supports several IDEs. You are encouraged to use any IDE of your choice. However, for consistency, we use <a href="https://code.visualstudio.com">Microsoft Visual Studio</a> throughout this tutorial.</p>
 
-<h3 id="play-around-with-docker">Play Around with Docker</h3>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam pretium orci eu lorem feugiat aliquet. Fusce massa erat, vehicula sed libero sed, aliquam elementum nisi. Sed vitae est sapien. In consectetur hendrerit nisl. Nulla pulvinar aliquet est maximus ultricies. Curabitur finibus elit ligula, eget hendrerit nisi auctor at. In vestibulum eros ac tristique molestie. Mauris condimentum felis eget diam malesuada luctus. Suspendisse orci justo, tincidunt quis tempor eget, finibus non turpis. Aenean et vulputate velit, vel molestie magna. Donec non elit id lacus facilisis commodo.</p>
+<h3 id="download-and-run-sample-project">Download and Run Sample Project</h3>
+<ol>
+  <li>Clone the sample <a href="https://github.com/Hyacinth-Ali/Docker-Kubernetes-Tutorial">projects</a>: Navigate to the folder <em>getting-started-demo-app</em>, which contains the source code for this quick demo. Open the folder with your IDE, and you will see a very simple <strong>Hello World</strong> NodeJS application, as shown below. <br /></li>
+</ol>
+
+<p><img src="/assets/images/getting-started-node-app.png" alt="Getting Started Demo App" style="width:100%;" /></p>
+
+<ol>
+  <li>To run the application without docker; follow the steps below:
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm install
+node app.js
+</code></pre></div>    </div>
+    <blockquote>
+      <p><strong>npm install</strong> downloads and then install all the depencies in the application <br />
+<strong>node app.js</strong> starts the server on port 3000.</p>
+    </blockquote>
+  </li>
+  <li>Open your web browser and then navigate to <a href="http://localhost:3000">http://localhost:3000</a> to visualize the response of the server.</li>
+</ol>
+
+<h3 id="quick-dive-into-docker-and-container">Quick Dive into Docker and Container</h3>
+<p>Here, we containerize the application and then start the container.</p>
+<ol>
+  <li>Create a file at the root project and name it <em>Dockerfile</em></li>
+  <li>Enter the following set of instructions in the file.</li>
+</ol>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">FROM</span> <span class="nx">node</span><span class="p">:</span><span class="mi">14</span> 
+
+<span class="nx">WORKDIR</span> <span class="o">/</span><span class="nx">app</span>
+
+<span class="nx">COPY</span> <span class="kr">package</span><span class="o">*</span><span class="p">.</span><span class="nx">json</span> <span class="o">/</span><span class="nx">app</span>
+
+<span class="nx">RUN</span> <span class="nx">npm</span> <span class="nx">install</span>
+
+<span class="nx">COPY</span> <span class="p">.</span> <span class="p">.</span>
+
+<span class="nx">EXPOSE</span> <span class="mi">3000</span>
+
+<span class="nx">CMD</span> <span class="p">[</span> <span class="dl">"</span><span class="s2">node</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">app.js</span><span class="dl">"</span> <span class="p">]</span>
+</code></pre></div></div>
+<ol>
+  <li>Open a terminal and then navigate to the root project.</li>
+  <li>Build the image, i.e., create a Docker image based on the <em>Dockerfile</em></li>
+</ol>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">docker build -t demo-image .
+</span></code></pre></div></div>
+<ol>
+  <li>List existing images to see the new image (demo-image)
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker images
+</code></pre></div>    </div>
+  </li>
+  <li>Start a Docker container based on the new image
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run -d -p 3000:3000 demo-image
+</code></pre></div>    </div>
+  </li>
+  <li>Navigate to <a href="http://localhost:3000">http://localhost:3000</a> in your browser or use Docker dashboard to open the running container. Also, you can list running containers with the following command.
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker ps
+</code></pre></div>    </div>
+  </li>
+</ol>
 
 <h3 id="section-2-building-blocks-of-a-conatiner">Section 2: Building Blocks of a Conatiner</h3>
 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam pretium orci eu lorem feugiat aliquet. Fusce massa erat, vehicula sed libero sed, aliquam elementum nisi.</p>
