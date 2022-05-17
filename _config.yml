@@ -5,4 +5,4 @@ kramdown:
 exclude:
   - node_modules/
 
-theme: jekyll-theme-slate
+theme: jekyll-theme-cayman
