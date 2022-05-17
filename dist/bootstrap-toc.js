@@ -174,7 +174,10 @@
   $(function() {
     $('nav[data-toggle="toc"]').each(function(i, el) {
       var $nav = $(el);
-      Toc.init($nav);
+      // Toc.init($nav);
+      Toc.init({
+        $scope: $("h5")
+      });
     });
   });
 })(jQuery);

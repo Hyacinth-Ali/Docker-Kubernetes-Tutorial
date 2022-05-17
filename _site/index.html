@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Table of Contents plugin for Bootstrap</title>
+    <title>Docker Kubernetes Tutorial</title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.1.1/gh-fork-ribbon.min.css"
@@ -74,252 +74,81 @@
 
       hljs.initHighlightingOnLoad();
 
-      $(function() {
-        $("#toc").append('<div class="hint">(creates this)</div>');
-      });
+      // $(function() {
+      //   $("#toc").append('<div class="hint">(creates this)</div>');
+      // });
     </script>
   </head>
   <body data-spy="scroll" data-target="#toc">
-    <div class="github-fork-ribbon-wrapper right">
+    <!-- <div class="github-fork-ribbon-wrapper right">
       <div class="github-fork-ribbon">
-        <a href="https://github.com/afeld/bootstrap-toc">Fork me on GitHub</a>
+        <a href="https://github.com/Hyacinth-Ali/Docker-Kubernetes-Tutorial">Clone Sample Projects on GitHub</a>
       </div>
-    </div>
+    </div> -->
     <div class="container">
       <div class="row">
         <div class="col-sm-3">
           <nav id="toc" data-toggle="toc" class="sticky-top"></nav>
         </div>
         <div class="col-sm-9">
-          <h1 id="table-of-contents-plugin-for-bootstrap">Table of Contents plugin for Bootstrap</h1>
+          <h1 id="docker-kubernetes-hands-on-tutorial">Docker Kubernetes Hands-On Tutorial</h1>
+<p>This hands-on tutorial discusses containerization of software applications with Docker and Kubernetes. It provides a step-by-step description with sample projects for demonstrations. The sample projects can be accessed <a href="https://github.com/Hyacinth-Ali/Docker-Kubernetes-Tutorial">here</a>.</p>
 
-<p>This <a href="http://getbootstrap.com/">Bootstrap</a> plugin allows you to generate a table of contents for any page, based on the heading elements (<code class="language-plaintext highlighter-rouge">&lt;h1&gt;</code>, <code class="language-plaintext highlighter-rouge">&lt;h2&gt;</code>, etc.). It is meant to emulate the sidebar you see on <a href="https://getbootstrap.com/docs/3.3/css/">the Bootstrap v3 documentation site</a>.</p>
+<!-- This [Bootstrap](http://getbootstrap.com/) plugin allows you to generate a table of contents for any page, based on the heading elements (`<h1>`, `<h2>`, etc.). It is meant to emulate the sidebar you see on [the Bootstrap v3 documentation site](https://getbootstrap.com/docs/3.3/css/). -->
 
-<p>This page is an example of the plugin in action – the table of contents you see on the left (or top, on mobile) was automatically generated, without having to manually keep all of the navigation items in sync with the headings.</p>
+<h2 id="section-1-the-basics">Section 1: The Basics</h2>
+<p><a href="https://docs.docker.com/get-started/overview/">Docker</a> is a famous container engine which allows users to create and manage containers. On the other hand, A container is a standardized independent unit or module of a software (Application code + Dependencies). Docker facilitates development, shipping, and running of software applications across different environments.</p>
 
-<p>IDs are created on the heading elements if they aren’t already present. Unicode characters are supported. While IDs are added for developer convenience, you’ll want to do this on the backend / through your static site generator so that your users can <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#attr-href">link to the anchors via URL fragments</a>.</p>
+<h3 id="docker-installation">Docker Installation</h3>
+<p><a href="https://docs.docker.com/get-docker/">Install Docker</a> by following the steps specific for your operating system.</p>
 
-<h2 id="usage">Usage</h2>
+<h3 id="ide-installation">IDE Installation</h3>
+<p>Docker supports several IDEs. You are encouraged to use any IDE of your choice. However, for consistency, we use <a href="https://code.visualstudio.com">Microsoft Visual Studio</a> throughout this tutorial.</p>
 
+<h3 id="play-around-with-docker">Play Around with Docker</h3>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam pretium orci eu lorem feugiat aliquet. Fusce massa erat, vehicula sed libero sed, aliquam elementum nisi. Sed vitae est sapien. In consectetur hendrerit nisl. Nulla pulvinar aliquet est maximus ultricies. Curabitur finibus elit ligula, eget hendrerit nisi auctor at. In vestibulum eros ac tristique molestie. Mauris condimentum felis eget diam malesuada luctus. Suspendisse orci justo, tincidunt quis tempor eget, finibus non turpis. Aenean et vulputate velit, vel molestie magna. Donec non elit id lacus facilisis commodo.</p>
+
+<h3 id="section-2-building-blocks-of-a-conatiner">Section 2: Building Blocks of a Conatiner</h3>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam pretium orci eu lorem feugiat aliquet. Fusce massa erat, vehicula sed libero sed, aliquam elementum nisi.</p>
+
+<h4 id="introduction-to-dockerfile-images-and-containers">Introduction to Dockerfile, Images, and Containers</h4>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam pretium orci eu lorem feugiat aliquet. Fusce massa erat, vehicula sed libero sed, aliquam elementum nisi. Sed vitae est sapien. In consectetur hendrerit nisl. Nulla pulvinar aliquet est maximus ultricies. Curabitur finibus elit ligula, eget hendrerit nisi auctor at. In vestibulum eros ac tristique molestie. Mauris condimentum felis eget diam malesuada luctus. Suspendisse orci justo, tincidunt quis tempor eget, finibus non turpis. Aenean et vulputate velit, vel molestie magna. Donec non elit id lacus facilisis commodo.</p>
+
+<h4 id="using-external-images">Using External Images</h4>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam pretium orci eu lorem feugiat aliquet. Fusce massa erat, vehicula sed libero sed, aliquam elementum nisi. Sed vitae est sapien. In consectetur hendrerit nisl. Nulla pulvinar aliquet est maximus ultricies. Curabitur finibus elit ligula, eget hendrerit nisi auctor at. In vestibulum eros ac tristique molestie. Mauris condimentum felis eget diam malesuada luctus. Suspendisse orci justo, tincidunt quis tempor eget, finibus non turpis. Aenean et vulputate velit, vel molestie magna. Donec non elit id lacus facilisis commodo.</p>
+
+<h4 id="creating-our-own-images">Creating our Own Images</h4>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam pretium orci eu lorem feugiat aliquet. Fusce massa erat, vehicula sed libero sed, aliquam elementum nisi. Sed vitae est sapien. In consectetur hendrerit nisl. Nulla pulvinar aliquet est maximus ultricies. Curabitur finibus elit ligula, eget hendrerit nisi auctor at. In vestibulum eros ac tristique molestie. Mauris condimentum felis eget diam malesuada luctus. Suspendisse orci justo, tincidunt quis tempor eget, finibus non turpis. Aenean et vulputate velit, vel molestie magna. Donec non elit id lacus facilisis commodo.</p>
+
+<h4 id="instantiating-images-creating-containers">Instantiating Images (Creating Containers)</h4>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam pretium orci eu lorem feugiat aliquet. Fusce massa erat, vehicula sed libero sed, aliquam elementum nisi. Sed vitae est sapien. In consectetur hendrerit nisl. Nulla pulvinar aliquet est maximus ultricies. Curabitur finibus elit ligula, eget hendrerit nisi auctor at. In vestibulum eros ac tristique molestie. Mauris condimentum felis eget diam malesuada luctus. Suspendisse orci justo, tincidunt quis tempor eget, finibus non turpis. Aenean et vulputate velit, vel molestie magna. Donec non elit id lacus facilisis commodo.</p>
+
+<h4 id="managing-images">Managing Images</h4>
 <ol>
-  <li>Set up Bootstrap v4.
-    <ul>
-      <li>For Bootstrap v3, see <a href="https://github.com/afeld/bootstrap-toc/blob/v0.4.1/index.md#usage">the older instructions</a>.</li>
-    </ul>
+  <li>
+    <p>Naming images <br />
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam pretium orci eu lorem feugiat aliquet. Fusce massa erat, vehicula sed libero sed, aliquam elementum nisi. Sed vitae est sapien. In consectetur hendrerit nisl. Nulla pulvinar aliquet est maximus ultricies. Curabitur finibus elit ligula, eget hendrerit nisi auctor at. In vestibulum eros ac tristique molestie. Mauris condimentum felis eget diam malesuada luctus. Suspendisse orci justo, tincidunt quis tempor eget, finibus non turpis. Aenean et vulputate velit, vel molestie magna. Donec non elit id lacus facilisis commodo.</p>
   </li>
   <li>
-    <p>Include the Bootstrap Table of Contents stylesheet and JavaScript file. <a href="https://github.com/afeld/bootstrap-toc/tree/gh-pages/dist">Unminified versions</a> are also available.</p>
-
-    <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- add after bootstrap.min.css --&gt;</span>
-<span class="nt">&lt;link</span>
-  <span class="na">rel=</span><span class="s">"stylesheet"</span>
-  <span class="na">href=</span><span class="s">"https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.css"</span>
-<span class="nt">/&gt;</span>
-<span class="c">&lt;!-- add after bootstrap.min.js --&gt;</span>
-<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
-</code></pre></div>    </div>
+    <p>Listing existing images <br />
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam pretium orci eu lorem feugiat aliquet. Fusce massa erat, vehicula sed libero sed, aliquam elementum nisi. Sed vitae est sapien. In consectetur hendrerit nisl. Nulla pulvinar aliquet est maximus ultricies. Curabitur finibus elit ligula, eget hendrerit nisi auctor at. In vestibulum eros ac tristique molestie. Mauris condimentum felis eget diam malesuada luctus. Suspendisse orci justo, tincidunt quis tempor eget, finibus non turpis. Aenean et vulputate velit, vel molestie magna. Donec non elit id lacus facilisis commodo.</p>
   </li>
-  <li>Pick one of the two options below.</li>
-  <li>Determine the <a href="#layout">layout</a>.</li>
+  <li>
+    <p>Inspecting Images <br />
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam pretium orci eu lorem feugiat aliquet. Fusce massa erat, vehicula sed libero sed, aliquam elementum nisi. Sed vitae est sapien. In consectetur hendrerit nisl. Nulla pulvinar aliquet est maximus ultricies. Curabitur finibus elit ligula, eget hendrerit nisi auctor at. In vestibulum eros ac tristique molestie. Mauris condimentum felis eget diam malesuada luctus. Suspendisse orci justo, tincidunt quis tempor eget, finibus non turpis. Aenean et vulputate velit, vel molestie magna. Donec non elit id lacus facilisis commodo.</p>
+  </li>
+  <li>
+    <p>Removing Images <br />
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam pretium orci eu lorem feugiat aliquet. Fusce massa erat, vehicula sed libero sed, aliquam elementum nisi. Sed vitae est sapien. In consectetur hendrerit nisl. Nulla pulvinar aliquet est maximus ultricies. Curabitur finibus elit ligula, eget hendrerit nisi auctor at. In vestibulum eros ac tristique molestie. Mauris condimentum felis eget diam malesuada luctus. Suspendisse orci justo, tincidunt quis tempor eget, finibus non turpis. Aenean et vulputate velit, vel molestie magna. Donec non elit id lacus facilisis commodo.</p>
+  </li>
 </ol>
 
-<h3 id="via-data-attributes">Via data attributes</h3>
+<h4 id="managing-containers">Managing Containers</h4>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam pretium orci eu lorem feugiat aliquet. Fusce massa erat, vehicula sed libero sed, aliquam elementum nisi. Sed vitae est sapien. In consectetur hendrerit nisl. Nulla pulvinar aliquet est maximus ultricies. Curabitur finibus elit ligula, eget hendrerit nisi auctor at. In vestibulum eros ac tristique molestie. Mauris condimentum felis eget diam malesuada luctus. Suspendisse orci justo, tincidunt quis tempor eget, finibus non turpis. Aenean et vulputate velit, vel molestie magna. Donec non elit id lacus facilisis commodo.</p>
 
-<p><em>Simplest.</em></p>
+<h2 id="module-2---kubernetes">Module 2 - Kubernetes</h2>
 
-<p>Create a <code class="language-plaintext highlighter-rouge">&lt;nav&gt;</code> element with a <code class="language-plaintext highlighter-rouge">data-toggle="toc"</code> attribute.</p>
-
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;nav</span> <span class="na">id=</span><span class="s">"toc"</span> <span class="na">data-toggle=</span><span class="s">"toc"</span><span class="nt">&gt;&lt;/nav&gt;</span>
-</code></pre></div></div>
-
-<p>You can put this wherever on the page you like. Since this plugin leverages Bootstrap’s <a href="https://getbootstrap.com/docs/4.0/components/scrollspy/">Scrollspy</a> plugin, you will also need to add a couple attributes to the <code class="language-plaintext highlighter-rouge">&lt;body&gt;</code>:</p>
-
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;body</span> <span class="na">data-spy=</span><span class="s">"scroll"</span> <span class="na">data-target=</span><span class="s">"#toc"</span><span class="nt">&gt;&lt;/body&gt;</span>
-</code></pre></div></div>
-
-<h3 id="via-javascript">Via JavaScript</h3>
-
-<p><em>If you need customization.</em></p>
-
-<p>If you prefer to create your navigation element another way (e.g. within single-page apps), you can pass a jQuery object into <code class="language-plaintext highlighter-rouge">Toc.init()</code>.</p>
-
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;nav</span> <span class="na">id=</span><span class="s">"toc"</span><span class="nt">&gt;&lt;/nav&gt;</span>
-</code></pre></div></div>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-  <span class="kd">var</span> <span class="nx">navSelector</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">#toc</span><span class="dl">"</span><span class="p">;</span>
-  <span class="kd">var</span> <span class="nx">$myNav</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">navSelector</span><span class="p">);</span>
-  <span class="nx">Toc</span><span class="p">.</span><span class="nx">init</span><span class="p">(</span><span class="nx">$myNav</span><span class="p">);</span>
-  <span class="nx">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">body</span><span class="dl">"</span><span class="p">).</span><span class="nx">scrollspy</span><span class="p">({</span>
-    <span class="na">target</span><span class="p">:</span> <span class="nx">navSelector</span>
-  <span class="p">});</span>
-<span class="p">});</span>
-</code></pre></div></div>
-
-<p>See the <a href="https://getbootstrap.com/docs/4.0/components/scrollspy/">Scrollspy</a> documentation for more information about initializing that plugin.</p>
-
-<h4 id="options">Options</h4>
-
-<p>When calling <code class="language-plaintext highlighter-rouge">Toc.init()</code>, you can either pass in the jQuery object for the <code class="language-plaintext highlighter-rouge">&lt;nav&gt;</code> element (as seen above), or an options object:</p>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">Toc</span><span class="p">.</span><span class="nx">init</span><span class="p">({</span>
-  <span class="na">$nav</span><span class="p">:</span> <span class="nx">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">#myNav</span><span class="dl">"</span><span class="p">)</span>
-  <span class="c1">// ...</span>
-<span class="p">});</span>
-</code></pre></div></div>
-
-<p>All options are optional, unless otherwise indicated.</p>
-
-<table class="table">
-  <thead>
-    <tr>
-      <th>option</th>
-      <th>type</th>
-      <th>notes</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">$nav</code></td>
-      <td>jQuery Object</td>
-      <td>(required) The element that the navigation will be created in.</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">$scope</code></td>
-      <td>jQuery Object</td>
-      <td>The element where the search for headings will be limited to, or the list of headings that will be used in the navigation. Defaults to <code class="language-plaintext highlighter-rouge">$(document.body)</code>.</td>
-    </tr>
-  </tbody>
-</table>
-
-<h2 id="customization">Customization</h2>
-
-<h3 id="headings">Headings</h3>
-
-<p>By default, the plugin chooses the top-level navigation items by searching for headings at the first heading level, then works its way down (<code class="language-plaintext highlighter-rouge">&lt;h1&gt;</code>, then <code class="language-plaintext highlighter-rouge">&lt;h2&gt;</code>, etc.) It will stop when it finds the first set of headings where more than one exists at that level. For example:</p>
-
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;h1&gt;</span>The title<span class="nt">&lt;/h1&gt;</span>
-<span class="nt">&lt;h2&gt;</span>Some sub-title<span class="nt">&lt;/h2&gt;</span>
-...
-<span class="nt">&lt;h3&gt;</span>Section 1<span class="nt">&lt;/h3&gt;</span>
-<span class="nt">&lt;h4&gt;</span>Subsection A<span class="nt">&lt;/h4&gt;</span>
-...
-<span class="nt">&lt;h4&gt;</span>Subsection B<span class="nt">&lt;/h4&gt;</span>
-...
-<span class="nt">&lt;h3&gt;</span>Section 2<span class="nt">&lt;/h3&gt;</span>
-</code></pre></div></div>
-
-<p>The plugin would see there’s only one <code class="language-plaintext highlighter-rouge">&lt;h1&gt;</code>, then that there’s only one <code class="language-plaintext highlighter-rouge">&lt;h2&gt;</code>, then stop when it sees there’s more than one <code class="language-plaintext highlighter-rouge">&lt;h3&gt;</code>. The identified level becomes the top-level navigation items in the Table of Contents, and any headings under those (the <code class="language-plaintext highlighter-rouge">&lt;h4&gt;</code>s in this case) would be the second-level navigation.</p>
-
-<p>This behavior can be customized with the <code class="language-plaintext highlighter-rouge">$scope</code> <a href="#options">option</a>. That jQuery object can be created with one or more selectors to force certain headings to be used.</p>
-
-<p>In the above example, let’s say that you wanted the navigation to only contain the Subsections. You could pass:</p>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">Toc</span><span class="p">.</span><span class="nx">init</span><span class="p">({</span>
-  <span class="na">$scope</span><span class="p">:</span> <span class="nx">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">h4</span><span class="dl">"</span><span class="p">)</span>
-  <span class="c1">// ...</span>
-<span class="p">});</span>
-</code></pre></div></div>
-
-<p>and the resulting Table of Contents would only contain:</p>
-
-<blockquote>
-  <ul>
-    <li>Subsection A</li>
-    <li>Subsection B</li>
-  </ul>
-</blockquote>
-
-<h3 id="displayed-text">Displayed text</h3>
-
-<p>By default, Bootstrap TOC will use the text from the heading element in the table of contents. If you want to customize what is displayed, add a <code class="language-plaintext highlighter-rouge">data-toc-text</code> attribute to the heading with the desired text. For example:</p>
-
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;h2</span> <span class="na">data-toc-text=</span><span class="s">"Short text"</span><span class="nt">&gt;</span>Longer text<span class="nt">&lt;/h2&gt;</span>
-</code></pre></div></div>
-
-<p>displays “Longer text” as the heading, but “Short text” in the sidebar.</p>
-
-<h3 id="skipping">Skipping</h3>
-
-<p>To prevent a particular heading from being added to the table of contents, add a <code class="language-plaintext highlighter-rouge">data-toc-skip</code> <a href="https://www.w3.org/TR/2008/WD-html5-20080610/semantics.html#boolean">boolean attribute</a> to the heading.</p>
-
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;h2</span> <span class="na">data-toc-skip</span><span class="nt">&gt;</span>Some heading you don't want in the nav<span class="nt">&lt;/h2&gt;</span>
-</code></pre></div></div>
-
-<h2 id="layout">Layout</h2>
-
-<p>This plugin isn’t opinionated about where it should be placed on the page, but a common use case is to have the table of contents created as a <a href="https://getbootstrap.com/docs/4.0/utilities/position/#sticky-top">“sticky”</a> sidebar.</p>
-
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;body</span> <span class="na">data-spy=</span><span class="s">"scroll"</span> <span class="na">data-target=</span><span class="s">"#toc"</span><span class="nt">&gt;</span>
-  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"container"</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"row"</span><span class="nt">&gt;</span>
-      <span class="c">&lt;!-- sidebar, which will move to the top on a small screen --&gt;</span>
-      <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"col-sm-3"</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;nav</span> <span class="na">id=</span><span class="s">"toc"</span> <span class="na">data-toggle=</span><span class="s">"toc"</span> <span class="na">class=</span><span class="s">"sticky-top"</span><span class="nt">&gt;&lt;/nav&gt;</span>
-      <span class="nt">&lt;/div&gt;</span>
-      <span class="c">&lt;!-- main content area --&gt;</span>
-      <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"col-sm-9"</span><span class="nt">&gt;</span>...<span class="nt">&lt;/div&gt;</span>
-    <span class="nt">&lt;/div&gt;</span>
-  <span class="nt">&lt;/div&gt;</span>
-<span class="nt">&lt;/body&gt;</span>
-</code></pre></div></div>
-
-<p>You may also want to include this in your stylesheet:</p>
-
-<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">nav</span><span class="o">[</span><span class="nt">data-toggle</span><span class="o">=</span><span class="s1">"toc"</span><span class="o">]</span> <span class="p">{</span>
-  <span class="nl">top</span><span class="p">:</span> <span class="m">42px</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="c">/* small screens */</span>
-<span class="k">@media</span> <span class="p">(</span><span class="n">max-width</span><span class="p">:</span> <span class="m">768px</span><span class="p">)</span> <span class="p">{</span>
-  <span class="c">/* override stickyness so that the navigation does not follow scrolling */</span>
-  <span class="nt">nav</span><span class="o">[</span><span class="nt">data-toggle</span><span class="o">=</span><span class="s1">"toc"</span><span class="o">]</span> <span class="p">{</span>
-    <span class="nl">margin-bottom</span><span class="p">:</span> <span class="m">42px</span><span class="p">;</span>
-    <span class="nl">position</span><span class="p">:</span> <span class="nb">static</span><span class="p">;</span>
-  <span class="p">}</span>
-
-  <span class="c">/* PICK ONE */</span>
-  <span class="c">/* don't expand nested items, which pushes down the rest of the page when navigating */</span>
-  <span class="nt">nav</span><span class="o">[</span><span class="nt">data-toggle</span><span class="o">=</span><span class="s1">"toc"</span><span class="o">]</span> <span class="nc">.nav</span> <span class="nc">.active</span> <span class="nc">.nav</span> <span class="p">{</span>
-    <span class="nl">display</span><span class="p">:</span> <span class="nb">none</span><span class="p">;</span>
-  <span class="p">}</span>
-  <span class="c">/* alternatively, if you *do* want the second-level navigation to be shown (as seen on this page on mobile), use this */</span>
-  <span class="c">/*
-  nav[data-toggle='toc'] .nav .nav {
-    display: block;
-  }
-  */</span>
-<span class="p">}</span>
-
-</code></pre></div></div>
-
-<p><em>Note: if you’re upgrading from version &lt;= 0.4.1 to 1.0.0+, these have changed.</em></p>
-
-<h2 id="examples">Examples</h2>
-
-<ul>
-  <li><a href="https://advanced-js.github.io/syllabus/">Advanced JS course syllabus</a></li>
-  <li><a href="https://rishikeshdarandale.github.io/aws-http/">aws-http</a></li>
-  <li><a href="https://ircama.github.io/osm-carto-tutorials/tile-server-ubuntu/">OpenStreetMap Carto Tutorials</a></li>
-</ul>
-
-<h2 id="see-also">See also</h2>
-
-<ul>
-  <li><a href="http://bryanbraun.github.io/anchorjs/">Adding links to all headings on your page</a></li>
-  <li><a href="https://github.com/afeld/bootstrap-toc/blob/gh-pages/CONTRIBUTING.md">Contributor information</a></li>
-  <li><a href="https://gist.github.com/iamravenous/4a1545dc3ccd24abf89e">Updating the URL hash based on scroll</a></li>
-</ul>
-
-<p>This plugin was heavily inspired by:</p>
-
-<ul>
-  <li><a href="https://jsfiddle.net/gableroux/S2SMK/">Bootstrap Docs Sidebar example</a></li>
-  <li><a href="http://gregfranko.com/jquery.tocify.js/">Tocify plugin</a></li>
-  <li><a href="http://projects.jga.me/toc/">TOC plugin</a></li>
-</ul>
-
-          <footer>
+          <!-- <footer>
             <a
               href="https://twitter.com/aidanfeldman"
               class="twitter-follow-button"
@@ -340,7 +169,7 @@
                 }
               })(document, "script", "twitter-wjs");
             </script>
-          </footer>
+          </footer> -->
         </div>
       </div>
     </div>
