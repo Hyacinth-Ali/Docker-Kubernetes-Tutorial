@@ -21,7 +21,7 @@ Docker supports several IDEs. You are encouraged to use any IDE of your choice. 
 ### Download and Run Sample Project
 - Clone the sample [projects](https://github.com/Hyacinth-Ali/Docker-Kubernetes-Tutorial): Navigate to the folder _getting-started-demo-app_, which contains the source code for this quick demo. Open the folder with your IDE, and you will see a very simple **Hello World** NodeJS application, as shown below. <br>
 
-<img src="/assets/images/getting-started-node-app.png" alt="Getting Started Demo App" style="width:100%;"/>
+<img src="/assets/images/getting-started-node-app.png" alt="Getting Started Demo App" style="width:95%;"/>
 
 - To run the application without docker; follow the steps below:
 ```
