@@ -81,6 +81,9 @@ Here, we containerize the application and then start the container.
     docker ps
     ```
 
+### Environment Variable
+Environment variable allows to run the same container based on particular but in a different modes or configurations. For example, the exposed container port can be a variable as demonstrated below.
+
 ## Section 2: The Main Building Blocks (Dockerfile, Image, and Container)
 Here, we will walk through the steps to containerize a software application with emphasizes on the core building blocks: Dockerfile, Image, and Container.
 
@@ -186,8 +189,41 @@ Named volume is not tied to a specific container; hence, it survives shutdown/re
 
 1. **Bind Mount**: This external storage binds a known directory in your local machine with another directory in the container. It is often used to bind source code with the container so that the image is not rebuilt after every change in the code. The command below creates a bind mount which connects a known directory (/app/to/code) in our local machine to a container directory (/app/code)<br />
  ```docker run -v /path/to/code:/app/code [OTHER OPTIONS] IMAGE``` <br />
-Bind Mount is similar to named volume, except that its location is known to us, i.e., we can physically locate the directory in our local machine. Note that bind mount requires an absolute path on your local machine, not a relative path or use ```-v $(pwd):/app`` for macOS and ```-v "%cd%":/app``` for Windows.
+Bind Mount is similar to named volume, except that its location is known to us, i.e., we can physically locate the directory in our local machine. Note that bind mount requires an absolute path on your local machine, not a relative path or use ```-v $(pwd):/app``` for macOS and ```-v "%cd%":/app``` for Windows.
  
-- **Read Only Volume**: This features ensures that container can only read from, but not write to, the path in our local machine. <br />
+1. **Read Only Volume**: This features ensures that container can only read from, but not write to, the path in our local machine. <br />
 ```docker run -v /path/to/code:/app/code ...:ro``` <br />
 Volumes that need to be written have to be overriden by bind mount volume. Note that this has to be specified in the docker run, not in docker file.
+
+
+
+
+
+
+
+## Multi Container Applications (Networking)
+So far, we have been working with single container apps. However, what if we want to add a database to our application stack, e.g., MySQL. The following question often arises - “Where will MySQL run? Install it in the same container or run it separately?” In general, each container should do one thing and do it well. Hence, it is preferred to separate the processes.
+
+Remember that containers, by default, run in isolation and don’t know anything about other processes or containers on the same machine. So, how do we allow one container to talk to another? The answer is networking.
+
+Here, we present three types of container communication: 
+1. Containers talking to external application, e.g., an application running in the web. This type of communication doesn't require any special configuration or setup. It works as though the application is not dockerized
+1. Container talking to the local machine, e.g., database running in the local machine. Here, you are required to create a network that comprises our dockerized application and the dockerized database process. This, however, requires a simple change in your url that conects to the database, ```localhost``` -> ```host.docker.internal```. Docker understands the command ```host.docker.internal```, which it translates to the IP address of your host machine.
+1. Container talking to another container, e.g., database running in a container. Containers can communicte between each with IP address or via a network with the name of the container.
+
+ App container can communicate with other container, e.g., mongodb, with the ip address of the mongodb container. The IP address can be gotten with docker container inspect mongodb where mongodb is the name of the mongodb container. The inspect command prints several details including the IP address. This IP Address can be plugged in the url that is used to connect to the data base.
+
+Containers can also communicate between one another with network. Docker creates network as follows:
+docker network create <name> Then use the name while running the container as --network network-name
+
+### Container Networking
+[Docker Network](https://docs.docker.com/network/) allows containers to communicate between each other and IPs are automatically resolved. The command below creates a network <br>
+```docker network create my_network```
+Unlike volumes, Docker requires to create a network before it can be used. ```docker network ls``` lists all the existing network in your local machine. With a network created, a container can be run based as a part of the network. Containers that are part of the network can communicate with just the name of the container.
+```docker run --network my_network image_name ...```
+Recall that you need to edit your database url, e.g., ```localhost``` -> ```container_name```
+
+## Docker Compose
+
+
+
