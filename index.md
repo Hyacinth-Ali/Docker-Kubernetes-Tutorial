@@ -201,7 +201,7 @@ Volumes that need to be written have to be overriden by bind mount volume. Note 
 
 
 
-## Multi Container Applications (Networking)
+## Section 4: Multi Container Applications (Networking)
 So far, we have been working with single container apps. However, what if we want to add a database to our application stack, e.g., MySQL. The following question often arises - “Where will MySQL run? Install it in the same container or run it separately?” In general, each container should do one thing and do it well. Hence, it is preferred to separate the processes.
 
 Remember that containers, by default, run in isolation and don’t know anything about other processes or containers on the same machine. So, how do we allow one container to talk to another? The answer is networking.
@@ -233,7 +233,104 @@ Unlike volumes, Docker requires to create a network before it can be used. ```do
 ```docker run --network my_network image_name ...```
 Recall that you need to edit your database url, e.g., ```localhost``` -> ```container_name```
 
-## Docker Compose
+### Docker Compose
+[Docker Compose](https://docs.docker.com/compose/) is a tool for defining and running multi-container Docker applications. With Compose, you use a YAML file to configure your application’s services. Then, with a single command, you create and start all the services from your configuration, instead of running several Docker commands with CLI. 
 
+#### Why Docker Compose?
+Consider this made-up example below: <br>
+```
+docker network create shop
+docker build -t shop-node .
+docker run -v logs:/app/logs --network shop --name shope-web shop-node
+docker build -t shop-database
+docker run -v data:/data/db --network shop --name shop-db shop-database
+```
+This simple example requires a lot commands to execute to run all containers required by this application. Often, you run these commands whenever you change something in your code or
+you need to bring up your containers again for some other reason. Running these commands may be daunting because you have to memorize and making changes in CLI ius not flexible like conventional text editors.
+
+With Docker Compose, this gets much easier. You can put your container configuration into a docker-compose.yaml file and then use just one command to bring up the entire environment: docker-compose up .
+
+Using Compose is basically a three-step process:
+
+1. Define your app’s environment with a Dockerfile so it can be reproduced anywhere.
+
+2. Define the services that make up your app in docker-compose.yml so they can be run together in an isolated environment.
+
+3. Run docker compose up and the Docker compose command starts and runs your entire app. You can alternatively run docker-compose up using the docker-compose binary.
+
+A docker-compose.yml looks like this: <br>
+
+```
+version: "3.8" # version of the Docker Compose spec which is being used
+services: # "Services" are in the end the Containers that your app needs
+  web:
+    build: . # Directory of the Dockerfile 
+    ports: # Define port mappings
+      - '80:80'
+    volumes: # Define any required volumes / bind mounts
+      - logs:/app/logs # named volume
+      - ./backend:/app # bind mount
+      - /app/node_modules # anonymous volume
+    environment:
+      - MONGODB_USERNAME=ali
+      - MONGODB_PASSWORD=secret
+    mongodb:
+    image: 'mongo' # THe image URL
+    volumes:
+      - data:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=ali
+      - MONGO_INITDB_ROOT_PASSWORD=secret
+# SPecify all the named volumes here
+volumes:
+  logs:
+  ```
+
+  version: "3.8" # version of the Docker Compose spec which is being used
+
+services: # "Services" are in the end the Containers that your app needs
+
+  backend:
+    build: . # Directory of the Dockerfile, in this case, current directory
+    ports:
+      - '80:80' # Define port mappings
+    volumes: # Define any required volumes / bind mounts
+      - logs:/app/logs # named volume
+      - ./backend:/app # bind mount
+      - /app/node_modules # anonymous volume
+    environment:
+      - MONGODB_USERNAME=ali
+      - MONGODB_PASSWORD=secret
+
+  mongodb:
+    image: 'mongo'
+    volumes:
+      - data:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=ali
+      - MONGO_INITDB_ROOT_PASSWORD=secret
+
+# SPecify all the named volumes here
+volumes:
+  logs:
+
+
+
+You can conveniently edit this file at any time and you just have a short, simple command which you can use to bring up your Containers:
+```
+docker-compose up
+```
+#### Docker Compose Key Commands
+There are two key commands:
+- **docker-compose up** : Start all containers / services mentioned in the Docker Compose file
+    - -d : Start in detached mode
+    - --build : Force Docker Compose to re-evaluate / rebuild all images (otherwise, it onlydoes that if an image is missing)
+- **docker-compose down** : Stop and remove all containers / services
+    - -v : Remove all Volumes used for the Containers - otherwise they stay around, even if the Containers are removed
+
+
+Of course, there are more commands. You'll see more commands in other course sections (e.g.
+the "Utility Containers" and "Laravel Demo" sections) but you can of course also already dive
+into the official [command reference](https://docs.docker.com/compose/reference/)
 
 
