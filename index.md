@@ -219,6 +219,16 @@ docker network create <name> Then use the name while running the container as --
 ### Container Networking
 [Docker Network](https://docs.docker.com/network/) allows containers to communicate between each other and IPs are automatically resolved. The command below creates a network <br>
 ```docker network create my_network```
+This is also called [user defined bridge network](https://docs.docker.com/network/bridge/)
+You can specify the subnet, the IP address range, the gateway, and other options. See the docker network create reference or the output of ```docker network create --help``` for details.
+
+Use the ```docker network rm``` command to remove a user-defined bridge network. If containers are currently connected to the network, disconnect them first. <br>
+```docker network rm my_network```
+
+To disconnect a running container from a user-defined bridge network, use the ```docker network disconnect``` command. The following command disconnects the my-demo container from the my-network network.
+
+ docker network disconnect my-network my-demo
+
 Unlike volumes, Docker requires to create a network before it can be used. ```docker network ls``` lists all the existing network in your local machine. With a network created, a container can be run based as a part of the network. Containers that are part of the network can communicate with just the name of the container.
 ```docker run --network my_network image_name ...```
 Recall that you need to edit your database url, e.g., ```localhost``` -> ```container_name```
