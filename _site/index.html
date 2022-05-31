@@ -372,7 +372,7 @@ you need to bring up your containers again for some other reason. Running these 
 services: # "Services" are in the end the Containers that your app needs
   web:
     build: . # Directory of the Dockerfile 
-    ports: # Define port mappings
+    ports: # Specify published ports
       - '80:80'
     volumes: # Define any required volumes / bind mounts
       - logs:/app/logs # named volume
@@ -392,34 +392,6 @@ services: # "Services" are in the end the Containers that your app needs
 volumes:
   logs:
 </code></pre></div></div>
-
-<p>version: “3.8” # version of the Docker Compose spec which is being used</p>
-
-<p>services: # “Services” are in the end the Containers that your app needs</p>
-
-<p>backend:
-    build: . # Directory of the Dockerfile, in this case, current directory
-    ports:
-      - ‘80:80’ # Define port mappings
-    volumes: # Define any required volumes / bind mounts
-      - logs:/app/logs # named volume
-      - ./backend:/app # bind mount
-      - /app/node_modules # anonymous volume
-    environment:
-      - MONGODB_USERNAME=ali
-      - MONGODB_PASSWORD=secret</p>
-
-<p>mongodb:
-    image: ‘mongo’
-    volumes:
-      - data:/data/db
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=ali
-      - MONGO_INITDB_ROOT_PASSWORD=secret</p>
-
-<h1 id="specify-all-the-named-volumes-here">SPecify all the named volumes here</h1>
-<p>volumes:
-  logs:</p>
 
 <p>You can conveniently edit this file at any time and you just have a short, simple command which you can use to bring up your Containers:</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker-compose up

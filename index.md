@@ -265,7 +265,7 @@ version: "3.8" # version of the Docker Compose spec which is being used
 services: # "Services" are in the end the Containers that your app needs
   web:
     build: . # Directory of the Dockerfile 
-    ports: # Define port mappings
+    ports: # Specify published ports
       - '80:80'
     volumes: # Define any required volumes / bind mounts
       - logs:/app/logs # named volume
@@ -285,36 +285,6 @@ services: # "Services" are in the end the Containers that your app needs
 volumes:
   logs:
   ```
-
-  version: "3.8" # version of the Docker Compose spec which is being used
-
-services: # "Services" are in the end the Containers that your app needs
-
-  backend:
-    build: . # Directory of the Dockerfile, in this case, current directory
-    ports:
-      - '80:80' # Define port mappings
-    volumes: # Define any required volumes / bind mounts
-      - logs:/app/logs # named volume
-      - ./backend:/app # bind mount
-      - /app/node_modules # anonymous volume
-    environment:
-      - MONGODB_USERNAME=ali
-      - MONGODB_PASSWORD=secret
-
-  mongodb:
-    image: 'mongo'
-    volumes:
-      - data:/data/db
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=ali
-      - MONGO_INITDB_ROOT_PASSWORD=secret
-
-# SPecify all the named volumes here
-volumes:
-  logs:
-
-
 
 You can conveniently edit this file at any time and you just have a short, simple command which you can use to bring up your Containers:
 ```
