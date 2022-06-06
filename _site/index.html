@@ -94,149 +94,176 @@
           <h1 id="docker-kubernetes-hands-on-tutorial">Docker Kubernetes Hands-On Tutorial</h1>
 
 <h4 id="based-on-materials-from">Based on Materials from:</h4>
-<p><a href="https://docs.docker.com">Docker Documentation</a> <br /> 
+
+<p><a href="https://docs.docker.com">Docker Documentation</a> <br />
 <a href="https://learning.edx.org/course/course-v1:IBM+CC0201EN+3T2020/home">EDX: Introduction to Containers, Kubernetes, and OpenShift</a> <br />
 <a href="https://learning.edx.org/course/course-v1:IBM+CC0101EN+2T2021/home">EDX: Introduction to Cloud Computing</a> <br />
 <a href="https://www.udemy.com/course/docker-kubernetes-the-practical-guide/">Udemy: Docker &amp; Kubernetes: The Practical Guide</a> <br /></p>
 
-<p>This hands-on tutorial discusses containerization of software applications with Docker and Kubernetes. It provides a step-by-step description with sample projects for demonstrations. The sample projects can be accessed <a href="https://github.com/Hyacinth-Ali/Docker-Kubernetes-Tutorial">here</a>.</p>
+<p>This hands-on tutorial discusses containerization of software applications with Docker and Kubernetes. It provides a step-by-step description (with sample projects) on how to package an application as a container. All the sample projects can be accessed <a href="https://github.com/Hyacinth-Ali/Docker-Kubernetes-Tutorial">here</a>.</p>
 
 <!-- This [Bootstrap](http://getbootstrap.com/) plugin allows you to generate a table of contents for any page, based on the heading elements (`<h1>`, `<h2>`, etc.). It is meant to emulate the sidebar you see on [the Bootstrap v3 documentation site](https://getbootstrap.com/docs/3.3/css/). -->
 
 <h4 id="docker-architecture">Docker architecture</h4>
 
-<p>Docker employs a client-server architecture. The client side accepts inputs from musers and then talks to the Docker Deamon (or dockerd), which does the heavy lifting of building, running, and distributing your Docker containers. The Docker client and daemon can run on the same system, or you can connect a Docker client to a remote Docker daemon. The Docker client and daemon communicate using a REST API, over UNIX sockets or a network interface. Another Docker client is Docker Compose, that lets you work with applications consisting of a set of containers.
+<p>Docker employs a client-server architecture. The client side accepts inputs from users and then talks to the Docker Deamon (or dockerd), which does the heavy lifting of building, running, and distributing your Docker containers. The Docker client and daemon can run on the same system, or you can connect a Docker client to a remote Docker daemon. The Docker client and daemon communicate using a REST API, over UNIX sockets or a network interface. Another Docker client is Docker Compose, that lets you work with applications consisting of a set of containers.
 <img src="https://user-images.githubusercontent.com/24963911/169084934-b00bff9c-8479-44cd-b3ca-7bdefc0497c3.png" alt="Docker Architecture" style="width:90%;" /></p>
 
 <h2 id="section-1-the-basics">Section 1: The Basics</h2>
+
 <p><a href="https://docs.docker.com/get-started/overview/">Docker</a> is a famous container engine which allows users to create and manage containers. On the other hand, A container is a standardized independent unit or module of a software (Application code + Dependencies). Docker facilitates development, shipping, and running of software applications across different environments.</p>
 
 <h3 id="docker-installation">Docker Installation</h3>
+
 <p><a href="https://docs.docker.com/get-docker/">Install Docker</a> by following the steps specific for your operating system. Also, you can <a href="https://labs.play-with-docker.com">Play Around with Docker</a> in a browser.</p>
 
 <h3 id="ide-installation">IDE Installation</h3>
-<p>Docker supports several IDEs. You are encouraged to use any IDE of your choice. However, for consistency, we use <a href="https://code.visualstudio.com">Microsoft Visual Studio</a> throughout this tutorial.</p>
+
+<p>Docker supports several IDEs. You are encouraged to use any IDE of your choice. However, for consistency, <a href="https://code.visualstudio.com">Microsoft Visual Studio</a> is used throughout this tutorial.</p>
 
 <h3 id="download-and-run-sample-project">Download and Run Sample Project</h3>
+
+<p>To get started, follow the steps below to download and then run a sample project.</p>
+
 <ul>
-  <li>Clone the sample <a href="https://github.com/Hyacinth-Ali/Docker-Kubernetes-Tutorial">projects</a>: Navigate to the folder <em>getting-started-demo-app</em>, which contains the source code for this quick demo. Open the folder with your IDE, and you will see a very simple <strong>Hello World</strong> NodeJS application, as shown below. <br /></li>
+  <li>Clone the sample <a href="https://github.com/Hyacinth-Ali/Docker-Kubernetes-Tutorial">projects</a>: Navigate to the folder <em>Section1/getting-started-node-app</em>, which contains the source code for this quick demo. Open the folder with your IDE, and you will see a very simple <strong>Hello World</strong> NodeJS application, as shown below. <br /></li>
 </ul>
 
 <p><img src="https://user-images.githubusercontent.com/24963911/169063666-b9f98e75-26fa-4bc3-98c6-09160213a550.png" alt="Getting Started Demo App" style="width:100%;" /></p>
 
 <ul>
-  <li>To run the application without docker; follow the steps below:
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm install
+  <li>To run the application without docker; run the following commands::</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm install
 node app.js
-</code></pre></div>    </div>
-    <blockquote>
-      <p><strong>npm install</strong> downloads and then install all the depencies in the application <br />
-<strong>node app.js</strong> starts the server on port 3000.</p>
-    </blockquote>
-  </li>
+</code></pre></div></div>
+
+<p><strong>npm install</strong> downloads and then installs all the depencies in the application, while <strong>node app.js</strong> starts the server on port 3000.</p>
+
+<ul>
   <li>Open your web browser and then navigate to <a href="http://localhost:3000">http://localhost:3000</a> to visualize the response of the server.</li>
 </ul>
 
 <h3 id="quick-dive-into-docker-and-container">Quick Dive into Docker and Container</h3>
+
 <p>Here, we containerize the application and then start the container.</p>
+
 <ol>
   <li>Create a file at the root project and name it <em>Dockerfile</em></li>
   <li>
     <p>Enter the following set of instructions in the file.</p>
 
-    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">FROM</span> <span class="nx">node</span><span class="p">:</span><span class="mi">14</span> 
- <span class="nx">WORKDIR</span> <span class="o">/</span><span class="nx">app</span>
- <span class="nx">COPY</span> <span class="kr">package</span><span class="o">*</span><span class="p">.</span><span class="nx">json</span> <span class="o">/</span><span class="nx">app</span>
- <span class="nx">RUN</span> <span class="nx">npm</span> <span class="nx">install</span>
- <span class="nx">COPY</span> <span class="p">.</span> <span class="p">.</span>
- <span class="nx">EXPOSE</span> <span class="mi">3000</span>
- <span class="nx">CMD</span> <span class="p">[</span> <span class="dl">"</span><span class="s2">node</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">app.js</span><span class="dl">"</span> <span class="p">]</span>
+    <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">FROM</span> <span class="nx">node</span><span class="p">:</span><span class="mi">14</span>
+<span class="nx">WORKDIR</span> <span class="o">/</span><span class="nx">app</span>
+<span class="nx">COPY</span> <span class="kr">package</span><span class="o">*</span><span class="p">.</span><span class="nx">json</span> <span class="o">/</span><span class="nx">app</span>
+<span class="nx">RUN</span> <span class="nx">npm</span> <span class="nx">install</span>
+<span class="nx">COPY</span> <span class="p">.</span> <span class="p">.</span>
+<span class="nx">EXPOSE</span> <span class="mi">3000</span>
+<span class="nx">CMD</span> <span class="p">[</span> <span class="dl">"</span><span class="s2">node</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">app.js</span><span class="dl">"</span> <span class="p">]</span>
 </code></pre></div>    </div>
   </li>
   <li>Open a terminal and then navigate to the root project.</li>
   <li>
     <p>Build the image, i.e., create a Docker image based on the <em>Dockerfile</em></p>
 
-    <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go"> docker build -t demo-image .
+    <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">docker build -t demo-image .
 </span></code></pre></div>    </div>
   </li>
   <li>
     <p>List existing images to see the new image (demo-image)</p>
 
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> docker images
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker images
 </code></pre></div>    </div>
   </li>
   <li>
     <p>Start a Docker container based on the new image</p>
 
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> docker run -d -p 3000:3000 demo-image
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run -d -p 3000:3000 demo-image
 </code></pre></div>    </div>
   </li>
   <li>Navigate to <a href="http://localhost:3000">http://localhost:3000</a> in your browser or use Docker dashboard to open the running container. Also, you can list running containers with the following command.
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> docker ps
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker ps
 </code></pre></div>    </div>
   </li>
 </ol>
 
 <h3 id="environment-variable">Environment Variable</h3>
+
 <p>Environment variable allows to run the same container based on particular but in a different modes or configurations. For example, the exposed container port can be a variable as demonstrated below.</p>
 
 <h2 id="section-2-the-main-building-blocks-dockerfile-image-and-container">Section 2: The Main Building Blocks (Dockerfile, Image, and Container)</h2>
+
 <p>Here, we will walk through the steps to containerize a software application with emphasizes on the core building blocks: Dockerfile, Image, and Container.</p>
 
 <h4 id="dockerfile">Dockerfile</h4>
+
 <p>A Dockerfile is a configuration file, which can be used to create a Docker image. It comprises a set of instructions that when executed creates an image. Here, we provide a brief explanation of the instructions we used already to create an image with a <em>Dockerfile</em></p>
 
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">FROM</span> <span class="nx">node</span><span class="p">:</span><span class="mi">14</span> 
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">FROM</span> <span class="nx">node</span><span class="p">:</span><span class="mi">14</span>
 </code></pre></div></div>
+
 <p>Here we specify the base image (<em>node</em> image, version:14). The base image provides underlying OS architecture and other packages that are required to run our application.</p>
 
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">WORKDIR</span> <span class="o">/</span><span class="nx">app</span>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">WORKDIR</span> <span class="o">/</span> <span class="nx">app</span><span class="p">;</span>
 </code></pre></div></div>
+
 <p>This instruction specifies the root directory for the image. Hence, all the contents of the image will stored in an <em>app</em> folder.</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">COPY</span> <span class="kr">package</span><span class="o">*</span><span class="p">.</span><span class="nx">json</span> <span class="o">/</span><span class="nx">app</span>
 </code></pre></div></div>
+
 <p>This instruction copies all the files with the name <em>package*.json</em> to the root directory of image. In our example, both package.json and ackage-lock.json will be copied to oot tdirecory of the image.</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">RUN</span> <span class="nx">npm</span> <span class="nx">install</span>
 </code></pre></div></div>
+
 <p>This instruction installs all the dependencies that are specified in our .json file. Remember that we had to run <code class="language-plaintext highlighter-rouge">npm install</code> before running our application.</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">COPY</span> <span class="p">.</span> <span class="p">.</span>
 </code></pre></div></div>
+
 <p>Here, we copy all contents from the folder that contains the <em>Dockerfile</em>, i.e., the root directory of our project and it is represented as a dot. However, the <em>Dockerfile</em> is not copied though. The second dot is the destination folder inside the image. Similarly, the dot implies that the copied contents will be stores in the root directory (or /app) of the image.</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">EXPOSE</span> <span class="mi">3000</span>
 </code></pre></div></div>
+
 <p>This instruction simply exposes poprt 3000 so that we can reeach the application from outside the container.</p>
 
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">CMD</span> <span class="p">[</span> <span class="dl">"</span><span class="s2">node</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">app.js</span><span class="dl">"</span> <span class="p">]</span>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">CMD</span><span class="p">[(</span><span class="dl">"</span><span class="s2">node</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">app.js</span><span class="dl">"</span><span class="p">)];</span>
 </code></pre></div></div>
+
 <p>Finally, this instruction runs the containerized application.</p>
 
 <h3 id="image">Image</h3>
+
 <p>An image contains everything required to run an application, including application code, dependencies, libraries, configuirations, and scripts. Also, an image contains other commands for running a container, e.g., <code class="language-plaintext highlighter-rouge">CMD [ "node", "app.js" ]</code> is a command to run the containerized node application. To create an image, we run the command below:</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">docker</span> <span class="nx">build</span> <span class="o">-</span><span class="nx">t</span> <span class="nx">demo</span><span class="o">-</span><span class="nx">image</span> <span class="p">.</span>
 </code></pre></div></div>
+
 <p>This command downloads all the required images, e.g., the node base image, if they are not yet cached locally in our system. In addition, the command executes all the instructions that are contained in <em>Dockerfile</em> except some commands that are required to run the container, e.g., <code class="language-plaintext highlighter-rouge">CMD [ "node", "app.js" ]</code>. The flag <code class="language-plaintext highlighter-rouge">-t</code> tags our image with a name (demo-image). The demo-image can then be used to refrence the image when we run containers based on the image. And finally, the <code class="language-plaintext highlighter-rouge">.</code> informs Docker to look for the <em>Dockerfile</em> at the root directory of our project.</p>
 
 <h3 id="container">Container</h3>
+
 <p>A container is an independent runnable instance of an image. A container is light weight, fast, portable, and platform indepenent, to name a few. We can run several containers from an image; however, they are independent and each runs in an isolation.</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">docker</span> <span class="nx">run</span> <span class="o">-</span><span class="nx">p</span> <span class="mi">3000</span><span class="p">:</span><span class="mi">3000</span> <span class="nx">demo</span><span class="o">-</span><span class="nx">image</span>
 </code></pre></div></div>
+
 <p>This <strong>docker run</strong> command instantiates an image, i.e., it creates a new container from the <strong>demo-image</strong>. The <code class="language-plaintext highlighter-rouge">-p</code> maps port 3000 of the host machine to port 3000 in the container. Remember that we specify in the <em>Dockerfile</em> that the application exposes port 3000. Note that both the host port and the container port can have different values.</p>
 
 <h3 id="external-images">External Images</h3>
+
 <p>Instead of creating our own image, we can run a container based on external image. A Docker Hub is an image registory which stores repositories of images. These images can be pulled to our local and then used to start a container. An example is demonstrated below.</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">docker</span> <span class="nx">run</span> <span class="o">-</span><span class="nx">it</span> <span class="nx">node</span>
 </code></pre></div></div>
+
 <p>Remember that <code class="language-plaintext highlighter-rouge">docker run</code> creates a new container based on an image. In this example, we using the <em>node</em> image, which we do not have locally. As a result, Docker pulls the image from the Docker Hub and then create a new container based onn the image. The <code class="language-plaintext highlighter-rouge">-it</code> tells Docker expose an interactive shell from inside the node container to our local machine so that we can interact with the running container.</p>
 
 <h3 id="managing-images-and-containers">Managing Images and Containers</h3>
+
 <p>Here are some commonly used commands to manage images and containers. You can use –help to explore all the available Docker commands. For example, docker run –help displays all the docker run command options.</p>
 
 <ul>
@@ -246,14 +273,7 @@ node app.js
     </ul>
   </li>
   <li><code class="language-plaintext highlighter-rouge">docker run &lt;image-name&gt;</code> : Creates and then starts a new container based on image <strong>*image-name</strong> (or
-use the image id)
-    <ul>
-      <li><code class="language-plaintext highlighter-rouge">--name &lt;name&gt;</code> : Assign a <strong>name</strong> to a container. The name can be used for stopping and removing etc.</li>
-      <li><code class="language-plaintext highlighter-rouge">-d</code> : Run the container in detached mode, i.e., output printed by the container is not visible, the command prompt / terminal does <strong>not</strong> wait for the container to stop</li>
-      <li><code class="language-plaintext highlighter-rouge">-it</code> : Run the container in “interactive” mode, i.e., the container / application is then prepared to receive input via the command prompt / terminal. You can stop the container with CTRL + C when using the -it flag</li>
-      <li><code class="language-plaintext highlighter-rouge">--rm</code> : Automatically remove the container when it’s stopped</li>
-    </ul>
-  </li>
+use the image id) - <code class="language-plaintext highlighter-rouge">--name &lt;name&gt;</code> : Assign a <strong>name</strong> to a container. The name can be used for stopping and removing etc. - <code class="language-plaintext highlighter-rouge">-d</code> : Run the container in detached mode, i.e., output printed by the container is not visible, the command prompt / terminal does <strong>not</strong> wait for the container to stop - <code class="language-plaintext highlighter-rouge">-it</code> : Run the container in “interactive” mode, i.e., the container / application is then prepared to receive input via the command prompt / terminal. You can stop the container with CTRL + C when using the -it flag - <code class="language-plaintext highlighter-rouge">--rm</code> : Automatically remove the container when it’s stopped</li>
   <li><code class="language-plaintext highlighter-rouge">docker ps</code> : List all <strong>running</strong> containers
     <ul>
       <li><code class="language-plaintext highlighter-rouge">-a</code> : List all containers, including <strong>stopped</strong> ones</li>
@@ -273,6 +293,7 @@ use the image id)
 </ul>
 
 <h2 id="section-3-container-volumes-and-bind-mounts">Section 3: Container Volumes and Bind Mounts</h2>
+
 <p>Docker container runs in isolation and when a container stops, all the data that are contained in the container are removed by default. <a href="https://docs.docker.com/storage/volumes/">Volume</a> is a Docker built in feature, which allows us to persist our data, e.g., user account details. Volumes provide the ability to connect specific filesystem paths of the container back to the host machine. If a directory in the container is mounted, changes in that directory are also seen on the host machine. If we mount that same directory across container restarts, we’d see the same files. Typically, volumes are folders on your host machine hard drive, which are mounted (or made available or mapped) into the containers.
 <img src="https://user-images.githubusercontent.com/24963911/169138298-8765e84e-c26c-440d-9dfe-7af412e3b8c6.png" alt="Docker Volumes" style="width:100%;" /></p>
 
@@ -282,8 +303,8 @@ use the image id)
   <li>
     <p><strong>Anonymous Volume</strong>: Only Docker knows the name and the location of the volume in your machine. It is specifically created for a single container. It survives after shutdown/restart of a contsiner, unless the container is removed, then the anonymous volume is gone as well. The command below creates an anonymous volume <br />
 <code class="language-plaintext highlighter-rouge">docker run -v/app/data [OTHER OPTIONS] IMAGE</code> <br />
-/app/data represents the data location in the container. Anonymous volume is predominantly used to lock a memory space, e.g., node_module, from being
-overriden by bind mount volume. An anonymous can be created in a <em>Dockerfile</em>, as well as in command line.</p>
+/app/data represents the data location in the container. Anonymous volume is predominantly used to lock a memory space, e.g., node<em>module, from being
+overriden by bind mount volume. An anonymous can be created in a _Dockerfile</em>, as well as in command line.</p>
   </li>
   <li>
     <p><strong>Named Volume</strong>: The volume has a name; still, only docker knows its location in your machine. The command below creates a named volume - <strong>data</strong> <br />
@@ -292,7 +313,7 @@ Named volume is not tied to a specific container; hence, it survives shutdown/re
   </li>
   <li>
     <p><strong>Bind Mount</strong>: This external storage binds a known directory in your local machine with another directory in the container. It is often used to bind source code with the container so that the image is not rebuilt after every change in the code. The command below creates a bind mount which connects a known directory (/app/to/code) in our local machine to a container directory (/app/code)<br />
- <code class="language-plaintext highlighter-rouge">docker run -v /path/to/code:/app/code [OTHER OPTIONS] IMAGE</code> <br />
+<code class="language-plaintext highlighter-rouge">docker run -v /path/to/code:/app/code [OTHER OPTIONS] IMAGE</code> <br />
 Bind Mount is similar to named volume, except that its location is known to us, i.e., we can physically locate the directory in our local machine. Note that bind mount requires an absolute path on your local machine, not a relative path or use <code class="language-plaintext highlighter-rouge">-v $(pwd):/app</code> for macOS and <code class="language-plaintext highlighter-rouge">-v "%cd%":/app</code> for Windows.</p>
   </li>
   <li>
@@ -303,11 +324,13 @@ Volumes that need to be written have to be overriden by bind mount volume. Note 
 </ol>
 
 <h2 id="section-4-multi-container-applications-networking">Section 4: Multi Container Applications (Networking)</h2>
+
 <p>So far, we have been working with single container apps. However, what if we want to add a database to our application stack, e.g., MySQL. The following question often arises - “Where will MySQL run? Install it in the same container or run it separately?” In general, each container should do one thing and do it well. Hence, it is preferred to separate the processes.</p>
 
 <p>Remember that containers, by default, run in isolation and don’t know anything about other processes or containers on the same machine. So, how do we allow one container to talk to another? The answer is networking.</p>
 
 <p>Here, we present three types of container communication:</p>
+
 <ol>
   <li>Containers talking to external application, e.g., an application running in the web. This type of communication doesn’t require any special configuration or setup. It works as though the application is not dockerized</li>
   <li>Container talking to the local machine, e.g., database running in the local machine. Here, you are required to create a network that comprises our dockerized application and the dockerized database process. This, however, requires a simple change in your url that conects to the database, <code class="language-plaintext highlighter-rouge">localhost</code> -&gt; <code class="language-plaintext highlighter-rouge">host.docker.internal</code>. Docker understands the command <code class="language-plaintext highlighter-rouge">host.docker.internal</code>, which it translates to the IP address of your host machine.</li>
@@ -320,6 +343,7 @@ Volumes that need to be written have to be overriden by bind mount volume. Note 
 docker network create <name> Then use the name while running the container as --network network-name</name></p>
 
 <h3 id="container-networking">Container Networking</h3>
+
 <p><a href="https://docs.docker.com/network/">Docker Network</a> allows containers to communicate between each other and IPs are automatically resolved. The command below creates a network <br />
 <code class="language-plaintext highlighter-rouge">docker network create my_network</code>
 This is also called <a href="https://docs.docker.com/network/bridge/">user defined bridge network</a>
@@ -337,16 +361,20 @@ You can specify the subnet, the IP address range, the gateway, and other options
 Recall that you need to edit your database url, e.g., <code class="language-plaintext highlighter-rouge">localhost</code> -&gt; <code class="language-plaintext highlighter-rouge">container_name</code></p>
 
 <h3 id="docker-compose">Docker Compose</h3>
+
 <p><a href="https://docs.docker.com/compose/">Docker Compose</a> is a tool for defining and running multi-container Docker applications. With Compose, you use a YAML file to configure your application’s services. Then, with a single command, you create and start all the services from your configuration, instead of running several Docker commands with CLI.</p>
 
 <h4 id="why-docker-compose">Why Docker Compose?</h4>
+
 <p>Consider this made-up example below: <br /></p>
+
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker network create shop
 docker build -t shop-node .
 docker run -v logs:/app/logs --network shop --name shope-web shop-node
 docker build -t shop-database
 docker run -v data:/data/db --network shop --name shop-db shop-database
 </code></pre></div></div>
+
 <p>This simple example requires a lot commands to execute to run all containers required by this application. Often, you run these commands whenever you change something in your code or
 you need to bring up your containers again for some other reason. Running these commands may be daunting because you have to memorize and making changes in CLI ius not flexible like conventional text editors.</p>
 
@@ -371,7 +399,7 @@ you need to bring up your containers again for some other reason. Running these 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>version: "3.8" # version of the Docker Compose spec which is being used
 services: # "Services" are in the end the Containers that your app needs
   web:
-    build: . # Directory of the Dockerfile 
+    build: . # Directory of the Dockerfile
     ports: # Specify published ports
       - '80:80'
     volumes: # Define any required volumes / bind mounts
@@ -391,13 +419,18 @@ services: # "Services" are in the end the Containers that your app needs
 # SPecify all the named volumes here
 volumes:
   logs:
+  data:
 </code></pre></div></div>
 
 <p>You can conveniently edit this file at any time and you just have a short, simple command which you can use to bring up your Containers:</p>
+
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker-compose up
 </code></pre></div></div>
+
 <h4 id="docker-compose-key-commands">Docker Compose Key Commands</h4>
+
 <p>There are two key commands:</p>
+
 <ul>
   <li><strong>docker-compose up</strong> : Start all containers / services mentioned in the Docker Compose file
     <ul>
@@ -412,10 +445,7 @@ volumes:
   </li>
 </ul>
 
-<p>Of course, there are more commands. You’ll see more commands in other course sections (e.g.
-the “Utility Containers” and “Laravel Demo” sections) but you can of course also already dive
-into the official <a href="https://docs.docker.com/compose/reference/">command reference</a></p>
-
+<p>Of course, there are <a href="https://docs.docker.com/compose/reference/">more commands</a></p>
 
           <!-- <footer>
             <a
