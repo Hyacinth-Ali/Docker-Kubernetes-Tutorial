@@ -1,15 +1,13 @@
- FROM node:14 
+FROM node:14 
 
- WORKDIR /app
+WORKDIR /app
 
- COPY package*.json /app
+COPY package*.json /app
 
- RUN npm install
+RUN npm install
 
- COPY . .
+COPY . .
 
- ENV PORT 3000
+EXPOSE 3000
 
- EXPOSE $PORT
- 
- CMD [ "node", "app.js" ]
+CMD [ "node", "app.js" ]
