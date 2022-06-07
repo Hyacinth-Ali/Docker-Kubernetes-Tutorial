@@ -37,7 +37,7 @@ Docker supports several IDEs. You are encouraged to use any IDE of your choice. 
 
 To get started, follow the steps below to download and then run a sample project.
 
-- Clone the sample [projects](https://github.com/Hyacinth-Ali/Docker-Kubernetes-Tutorial): Navigate to the folder _Section1/getting-started-node-app_, which contains the source code for this quick demo. Open the folder with your IDE, and you will see a very simple **Hello World** NodeJS application, as shown below. <br>
+- Clone the sample [projects](https://github.com/Hyacinth-Ali/Docker-Kubernetes-Tutorial): Navigate to the folder _Section1/basic-node-app_, which contains the source code for this quick demo. Open the folder with your IDE, and you will see a very simple **Hello World** NodeJS application, as shown below. <br>
 
 <img src="https://user-images.githubusercontent.com/24963911/169063666-b9f98e75-26fa-4bc3-98c6-09160213a550.png" alt="Getting Started Demo App" style="width:100%;"/>
 
@@ -54,7 +54,7 @@ node app.js
 
 ### Quick Dive into Docker and Container
 
-Here, we containerize the application and then start the container.
+Here, we containerize the application and then start the container, the complete dockerized application can be found at _Section1/basic_node_app_.
 
 1. Create a file at the root project and name it _Dockerfile_
 1. Enter the following set of instructions in the file.
@@ -92,10 +92,6 @@ Here, we containerize the application and then start the container.
    ```
    docker ps
    ```
-
-### Environment Variable
-
-Environment variable allows to run the same container based on particular but in a different modes or configurations. For example, the exposed container port can be a variable as demonstrated below.
 
 ## Section 2: The Main Building Blocks (Dockerfile, Image, and Container)
 
@@ -179,22 +175,56 @@ Remember that `docker run` creates a new container based on an image. In this ex
 
 ### Managing Images and Containers
 
-Here are some commonly used commands to manage images and containers. You can use --help to explore all the available Docker commands. For example, docker run --help displays all the docker run command options.
+Here are some commonly used commands to manage images and containers. You can use `--help` to explore all the available Docker commands. For example, `docker run --help` displays all the docker run command options.
 
-- `docker build .` : Build a Dockerfile and create your own Image based on the file
-  - `-t <name>:<tag>` : Assign a **name** and a **tag** to an image
-- `docker run <image-name>` : Creates and then starts a new container based on image **\*image-name** (or
-  use the image id) - `--name <name>` : Assign a **name** to a container. The name can be used for stopping and removing etc. - `-d` : Run the container in detached mode, i.e., output printed by the container is not visible, the command prompt / terminal does **not** wait for the container to stop - `-it` : Run the container in "interactive" mode, i.e., the container / application is then prepared to receive input via the command prompt / terminal. You can stop the container with CTRL + C when using the -it flag - `--rm` : Automatically remove the container when it's stopped
+- `docker build . `: Build a Dockerfile and then create an Image based on the file
+  - `-t NAME:TAG` : Assign a NAME and a TAG to an image
+- `docker run IMAGE_NAME` : Create and then start a new container based on image IMAGE_NAME (or use the image id)
+  - `--name NAME `: Assign a NAME to the container. The name can be used for stopping and
+    removing the container etc.
+  - `-d` : Run the container in **detached** mode, i.e., output printed by the container is not
+    visible. Hence, the command prompt or terminal does **NOT** wait for the container to stop
+  - `-it` : Run the container in **interactive** mode, i.e., the container or application is then prepared to receive input via the command prompt or terminal. You can stop the container with **CTRL + C** when using the `-it` flag
+  - `--rm` : Automatically remove the container when it's stopped.
 - `docker ps` : List all **running** containers
-  - `-a` : List all containers, including **stopped** ones
+  - `-a` : List all containers including stopped ones
 - `docker images` : List all locally stored images
-- `docker rm <container-name>` : Remove a container using the container name (you can also use the container id).
-- `docker rmi <image>` : Remove an image by name / id
+- `docker rm CONTAINER` : Remove a container with name CONTAINER (you can also use the container id)
+- `docker rmi IMAGE` : Remove an image by name or id
 - `docker container prune` : Remove all stopped containers
 - `docker image prune` : Remove all dangling images (untagged images)
   - `-a` : Remove all locally stored images
-- `docker push <image>` : Push an image to DockerHub (or another registry), the image name/tag must include the repository name/ url
-- `docker pull <image>` : Pull (download) an image from DockerHub (or another registry), this is done automatically if you just docker run IMAGE and the image wasn't pulled before
+- `docker push IMAGE` : Push an image to DockerHub (or another registry) - the image name or tag must include the repository name or url
+- `docker pull IMAGE` : Pull (download) an image from DockerHub (or another registry) - this is done automatically if you just docker run IMAGE and the image wasn't pulled before
+
+### Introduction to Environment Variable
+
+Environment variable allows you to run the same container based on particular IMAGE but in a different modes or configurations. For example, the exposed container port can be a variable as demonstrated below.
+
+```
+ENV PORT 3000
+EXPOSE $PORT
+```
+
+Now, you can run a container based on an image with different ports:
+
+- Create an image based on the dockerfile
+
+```
+docker build -t demo-image:env .
+```
+
+- Run a container based on the image and expose port **8000**, instead of the default **3000**
+
+```
+docker run -p 3000:8000 --rm -d --env PORT=8000  demo-image:env
+```
+
+- Run another container with environment variable file, port=8000.
+
+```
+docker run -p 3030:8000 --rm -d --env-file .env demo-image:env
+```
 
 ## Section 3: Container Volumes and Bind Mounts
 

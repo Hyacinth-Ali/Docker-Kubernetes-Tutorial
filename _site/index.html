@@ -126,7 +126,7 @@
 <p>To get started, follow the steps below to download and then run a sample project.</p>
 
 <ul>
-  <li>Clone the sample <a href="https://github.com/Hyacinth-Ali/Docker-Kubernetes-Tutorial">projects</a>: Navigate to the folder <em>Section1/getting-started-node-app</em>, which contains the source code for this quick demo. Open the folder with your IDE, and you will see a very simple <strong>Hello World</strong> NodeJS application, as shown below. <br /></li>
+  <li>Clone the sample <a href="https://github.com/Hyacinth-Ali/Docker-Kubernetes-Tutorial">projects</a>: Navigate to the folder <em>Section1/basic-node-app</em>, which contains the source code for this quick demo. Open the folder with your IDE, and you will see a very simple <strong>Hello World</strong> NodeJS application, as shown below. <br /></li>
 </ul>
 
 <p><img src="https://user-images.githubusercontent.com/24963911/169063666-b9f98e75-26fa-4bc3-98c6-09160213a550.png" alt="Getting Started Demo App" style="width:100%;" /></p>
@@ -147,7 +147,7 @@ node app.js
 
 <h3 id="quick-dive-into-docker-and-container">Quick Dive into Docker and Container</h3>
 
-<p>Here, we containerize the application and then start the container.</p>
+<p>Here, we containerize the application and then start the container, the complete dockerized application can be found at <em>Section1/basic_node_app</em>.</p>
 
 <ol>
   <li>Create a file at the root project and name it <em>Dockerfile</em></li>
@@ -187,10 +187,6 @@ node app.js
 </code></pre></div>    </div>
   </li>
 </ol>
-
-<h3 id="environment-variable">Environment Variable</h3>
-
-<p>Environment variable allows to run the same container based on particular but in a different modes or configurations. For example, the exposed container port can be a variable as demonstrated below.</p>
 
 <h2 id="section-2-the-main-building-blocks-dockerfile-image-and-container">Section 2: The Main Building Blocks (Dockerfile, Image, and Container)</h2>
 
@@ -264,33 +260,72 @@ node app.js
 
 <h3 id="managing-images-and-containers">Managing Images and Containers</h3>
 
-<p>Here are some commonly used commands to manage images and containers. You can use –help to explore all the available Docker commands. For example, docker run –help displays all the docker run command options.</p>
+<p>Here are some commonly used commands to manage images and containers. You can use <code class="language-plaintext highlighter-rouge">--help</code> to explore all the available Docker commands. For example, <code class="language-plaintext highlighter-rouge">docker run --help</code> displays all the docker run command options.</p>
 
 <ul>
-  <li><code class="language-plaintext highlighter-rouge">docker build .</code> : Build a Dockerfile and create your own Image based on the file
+  <li><code class="language-plaintext highlighter-rouge">docker build . </code>: Build a Dockerfile and then create an Image based on the file
     <ul>
-      <li><code class="language-plaintext highlighter-rouge">-t &lt;name&gt;:&lt;tag&gt;</code> : Assign a <strong>name</strong> and a <strong>tag</strong> to an image</li>
+      <li><code class="language-plaintext highlighter-rouge">-t NAME:TAG</code> : Assign a NAME and a TAG to an image</li>
     </ul>
   </li>
-  <li><code class="language-plaintext highlighter-rouge">docker run &lt;image-name&gt;</code> : Creates and then starts a new container based on image <strong>*image-name</strong> (or
-use the image id) - <code class="language-plaintext highlighter-rouge">--name &lt;name&gt;</code> : Assign a <strong>name</strong> to a container. The name can be used for stopping and removing etc. - <code class="language-plaintext highlighter-rouge">-d</code> : Run the container in detached mode, i.e., output printed by the container is not visible, the command prompt / terminal does <strong>not</strong> wait for the container to stop - <code class="language-plaintext highlighter-rouge">-it</code> : Run the container in “interactive” mode, i.e., the container / application is then prepared to receive input via the command prompt / terminal. You can stop the container with CTRL + C when using the -it flag - <code class="language-plaintext highlighter-rouge">--rm</code> : Automatically remove the container when it’s stopped</li>
+  <li><code class="language-plaintext highlighter-rouge">docker run IMAGE_NAME</code> : Create and then start a new container based on image IMAGE_NAME (or use the image id)
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">--name NAME </code>: Assign a NAME to the container. The name can be used for stopping and
+removing the container etc.</li>
+      <li><code class="language-plaintext highlighter-rouge">-d</code> : Run the container in <strong>detached</strong> mode, i.e., output printed by the container is not
+visible. Hence, the command prompt or terminal does <strong>NOT</strong> wait for the container to stop</li>
+      <li><code class="language-plaintext highlighter-rouge">-it</code> : Run the container in <strong>interactive</strong> mode, i.e., the container or application is then prepared to receive input via the command prompt or terminal. You can stop the container with <strong>CTRL + C</strong> when using the <code class="language-plaintext highlighter-rouge">-it</code> flag</li>
+      <li><code class="language-plaintext highlighter-rouge">--rm</code> : Automatically remove the container when it’s stopped.</li>
+    </ul>
+  </li>
   <li><code class="language-plaintext highlighter-rouge">docker ps</code> : List all <strong>running</strong> containers
     <ul>
-      <li><code class="language-plaintext highlighter-rouge">-a</code> : List all containers, including <strong>stopped</strong> ones</li>
+      <li><code class="language-plaintext highlighter-rouge">-a</code> : List all containers including stopped ones</li>
     </ul>
   </li>
   <li><code class="language-plaintext highlighter-rouge">docker images</code> : List all locally stored images</li>
-  <li><code class="language-plaintext highlighter-rouge">docker rm &lt;container-name&gt;</code> : Remove a container using the container name (you can also use the container id).</li>
-  <li><code class="language-plaintext highlighter-rouge">docker rmi &lt;image&gt;</code> : Remove an image by name / id</li>
+  <li><code class="language-plaintext highlighter-rouge">docker rm CONTAINER</code> : Remove a container with name CONTAINER (you can also use the container id)</li>
+  <li><code class="language-plaintext highlighter-rouge">docker rmi IMAGE</code> : Remove an image by name or id</li>
   <li><code class="language-plaintext highlighter-rouge">docker container prune</code> : Remove all stopped containers</li>
   <li><code class="language-plaintext highlighter-rouge">docker image prune</code> : Remove all dangling images (untagged images)
     <ul>
       <li><code class="language-plaintext highlighter-rouge">-a</code> : Remove all locally stored images</li>
     </ul>
   </li>
-  <li><code class="language-plaintext highlighter-rouge">docker push &lt;image&gt;</code> : Push an image to DockerHub (or another registry), the image name/tag must include the repository name/ url</li>
-  <li><code class="language-plaintext highlighter-rouge">docker pull &lt;image&gt;</code> : Pull (download) an image from DockerHub (or another registry), this is done automatically if you just docker run IMAGE and the image wasn’t pulled before</li>
+  <li><code class="language-plaintext highlighter-rouge">docker push IMAGE</code> : Push an image to DockerHub (or another registry) - the image name or tag must include the repository name or url</li>
+  <li><code class="language-plaintext highlighter-rouge">docker pull IMAGE</code> : Pull (download) an image from DockerHub (or another registry) - this is done automatically if you just docker run IMAGE and the image wasn’t pulled before</li>
 </ul>
+
+<h3 id="introduction-to-environment-variable">Introduction to Environment Variable</h3>
+
+<p>Environment variable allows you to run the same container based on particular IMAGE but in a different modes or configurations. For example, the exposed container port can be a variable as demonstrated below.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ENV PORT 3000
+EXPOSE $PORT
+</code></pre></div></div>
+
+<p>Now, you can run a container based on an image with different ports:</p>
+
+<ul>
+  <li>Create an image based on the dockerfile</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker build -t demo-image:env .
+</code></pre></div></div>
+
+<ul>
+  <li>Run a container based on the image and expose port <strong>8000</strong>, instead of the default <strong>3000</strong></li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run -p 3000:8000 --rm -d --env PORT=8000  demo-image:env
+</code></pre></div></div>
+
+<ul>
+  <li>Run another container with environment variable file, port=8000.</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run -p 3030:8000 --rm -d --env-file .env demo-image:env
+</code></pre></div></div>
 
 <h2 id="section-3-container-volumes-and-bind-mounts">Section 3: Container Volumes and Bind Mounts</h2>
 
