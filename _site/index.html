@@ -104,14 +104,14 @@
 
 <!-- This [Bootstrap](http://getbootstrap.com/) plugin allows you to generate a table of contents for any page, based on the heading elements (`<h1>`, `<h2>`, etc.). It is meant to emulate the sidebar you see on [the Bootstrap v3 documentation site](https://getbootstrap.com/docs/3.3/css/). -->
 
-<h4 id="docker-architecture">Docker architecture</h4>
-
-<p>Docker employs a client-server architecture. The client side accepts inputs from users and then talks to the Docker Deamon (or dockerd), which does the heavy lifting of building, running, and distributing your Docker containers. The Docker client and daemon can run on the same system, or you can connect a Docker client to a remote Docker daemon. The Docker client and daemon communicate using a REST API, over UNIX sockets or a network interface. Another Docker client is Docker Compose, that lets you work with applications consisting of a set of containers.
-<img src="https://user-images.githubusercontent.com/24963911/169084934-b00bff9c-8479-44cd-b3ca-7bdefc0497c3.png" alt="Docker Architecture" style="width:90%;" /></p>
-
 <h2 id="section-1-the-basics">Section 1: The Basics</h2>
 
 <p><a href="https://docs.docker.com/get-started/overview/">Docker</a> is a famous container engine which allows users to create and manage containers. On the other hand, A container is a standardized independent unit or module of a software (Application code + Dependencies). Docker facilitates development, shipping, and running of software applications across different environments.</p>
+
+<h3 id="docker-architecture">Docker architecture</h3>
+
+<p>Docker employs a client-server architecture. The client side accepts inputs from users and then talks to the Docker Daemon (or dockerd), which does the heavy lifting of building, running, and distributing your Docker containers. The Docker client and daemon can run on the same system, or you can connect a Docker client to a remote Docker daemon. The Docker client and daemon communicate using a REST API, over UNIX sockets or a network interface. Another Docker client is Docker Compose, that lets you work with applications consisting of a set of containers.
+<!-- <img src="https://user-images.githubusercontent.com/24963911/169084934-b00bff9c-8479-44cd-b3ca-7bdefc0497c3.png" alt="Docker Architecture" style="width:90%;"/> --></p>
 
 <h3 id="docker-installation">Docker Installation</h3>
 
@@ -201,7 +201,7 @@ node app.js
 
 <p>Here we specify the base image (<em>node</em> image, version:14). The base image provides underlying OS architecture and other packages that are required to run our application.</p>
 
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">WORKDIR</span> <span class="o">/</span> <span class="nx">app</span><span class="p">;</span>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">WORKDIR</span> <span class="o">/</span><span class="nx">app</span><span class="p">;</span>
 </code></pre></div></div>
 
 <p>This instruction specifies the root directory for the image. Hence, all the contents of the image will stored in an <em>app</em> folder.</p>
@@ -256,7 +256,7 @@ node app.js
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">docker</span> <span class="nx">run</span> <span class="o">-</span><span class="nx">it</span> <span class="nx">node</span>
 </code></pre></div></div>
 
-<p>Remember that <code class="language-plaintext highlighter-rouge">docker run</code> creates a new container based on an image. In this example, we using the <em>node</em> image, which we do not have locally. As a result, Docker pulls the image from the Docker Hub and then create a new container based onn the image. The <code class="language-plaintext highlighter-rouge">-it</code> tells Docker expose an interactive shell from inside the node container to our local machine so that we can interact with the running container.</p>
+<p>Remember that <code class="language-plaintext highlighter-rouge">docker run</code> creates a new container based on an image. In this example, we are using the <em>node</em> image, which we do not have locally. As a result, Docker pulls the image from the Docker Hub and then create a new container based onn the image. The <code class="language-plaintext highlighter-rouge">-it</code> tells Docker to expose an interactive shell from inside the node container to our local machine so that we can interact with the running container.</p>
 
 <h3 id="managing-images-and-containers">Managing Images and Containers</h3>
 

@@ -16,14 +16,15 @@ This hands-on tutorial discusses containerization of software applications with 
 
 <!-- This [Bootstrap](http://getbootstrap.com/) plugin allows you to generate a table of contents for any page, based on the heading elements (`<h1>`, `<h2>`, etc.). It is meant to emulate the sidebar you see on [the Bootstrap v3 documentation site](https://getbootstrap.com/docs/3.3/css/). -->
 
-#### Docker architecture
-
-Docker employs a client-server architecture. The client side accepts inputs from users and then talks to the Docker Deamon (or dockerd), which does the heavy lifting of building, running, and distributing your Docker containers. The Docker client and daemon can run on the same system, or you can connect a Docker client to a remote Docker daemon. The Docker client and daemon communicate using a REST API, over UNIX sockets or a network interface. Another Docker client is Docker Compose, that lets you work with applications consisting of a set of containers.
-<img src="https://user-images.githubusercontent.com/24963911/169084934-b00bff9c-8479-44cd-b3ca-7bdefc0497c3.png" alt="Docker Architecture" style="width:90%;"/>
 
 ## Section 1: The Basics
 
 [Docker](https://docs.docker.com/get-started/overview/) is a famous container engine which allows users to create and manage containers. On the other hand, A container is a standardized independent unit or module of a software (Application code + Dependencies). Docker facilitates development, shipping, and running of software applications across different environments.
+
+### Docker architecture
+
+Docker employs a client-server architecture. The client side accepts inputs from users and then talks to the Docker Daemon (or dockerd), which does the heavy lifting of building, running, and distributing your Docker containers. The Docker client and daemon can run on the same system, or you can connect a Docker client to a remote Docker daemon. The Docker client and daemon communicate using a REST API, over UNIX sockets or a network interface. Another Docker client is Docker Compose, that lets you work with applications consisting of a set of containers.
+<!-- <img src="https://user-images.githubusercontent.com/24963911/169084934-b00bff9c-8479-44cd-b3ca-7bdefc0497c3.png" alt="Docker Architecture" style="width:90%;"/> -->
 
 ### Docker Installation
 
@@ -108,7 +109,7 @@ FROM node:14
 Here we specify the base image (_node_ image, version:14). The base image provides underlying OS architecture and other packages that are required to run our application.
 
 ```js
-WORKDIR / app;
+WORKDIR /app;
 ```
 
 This instruction specifies the root directory for the image. Hence, all the contents of the image will stored in an _app_ folder.
@@ -171,7 +172,7 @@ Instead of creating our own image, we can run a container based on external imag
 docker run -it node
 ```
 
-Remember that `docker run` creates a new container based on an image. In this example, we using the _node_ image, which we do not have locally. As a result, Docker pulls the image from the Docker Hub and then create a new container based onn the image. The `-it` tells Docker expose an interactive shell from inside the node container to our local machine so that we can interact with the running container.
+Remember that `docker run` creates a new container based on an image. In this example, we are using the _node_ image, which we do not have locally. As a result, Docker pulls the image from the Docker Hub and then create a new container based onn the image. The `-it` tells Docker to expose an interactive shell from inside the node container to our local machine so that we can interact with the running container.
 
 ### Managing Images and Containers
 
