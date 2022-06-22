@@ -132,7 +132,7 @@
 <p><img src="https://user-images.githubusercontent.com/24963911/169063666-b9f98e75-26fa-4bc3-98c6-09160213a550.png" alt="Getting Started Demo App" style="width:100%;" /></p>
 
 <ul>
-  <li>To run the application without docker; run the following commands::</li>
+  <li>Run the following commands to start the server of the application:</li>
 </ul>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm install
@@ -147,7 +147,7 @@ node app.js
 
 <h3 id="quick-dive-into-docker-and-container">Quick Dive into Docker and Container</h3>
 
-<p>Here, we containerize the application and then start the container, the complete dockerized application can be found at <em>Section1/basic_node_app</em>.</p>
+<p>Here, we containerize the application and then start the container, the complete dockerized application can be found at <em>Section1/basic-node-app-container</em>.</p>
 
 <ol>
   <li>Create a file at the root project and name it <em>Dockerfile</em></li>
@@ -198,18 +198,17 @@ node app.js
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">FROM</span> <span class="nx">node</span><span class="p">:</span><span class="mi">14</span>
 </code></pre></div></div>
-
 <p>Here we specify the base image (<em>node</em> image, version:14). The base image provides underlying OS architecture and other packages that are required to run our application.</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">WORKDIR</span> <span class="o">/</span><span class="nx">app</span><span class="p">;</span>
 </code></pre></div></div>
 
-<p>This instruction specifies the root directory for the image. Hence, all the contents of the image will stored in an <em>app</em> folder.</p>
+<p>This instruction specifies the root directory for the image. Hence, all the contents of the image will be stored in the <em>app</em> folder.</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">COPY</span> <span class="kr">package</span><span class="o">*</span><span class="p">.</span><span class="nx">json</span> <span class="o">/</span><span class="nx">app</span>
 </code></pre></div></div>
 
-<p>This instruction copies all the files with the name <em>package*.json</em> to the root directory of image. In our example, both package.json and ackage-lock.json will be copied to oot tdirecory of the image.</p>
+<p>This instruction copies all the files with the name <em>package*.json</em> to the root directory of the image. In our example, both package.json and package-lock.json will be copied to the root directory of the image.</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">RUN</span> <span class="nx">npm</span> <span class="nx">install</span>
 </code></pre></div></div>
@@ -219,12 +218,12 @@ node app.js
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">COPY</span> <span class="p">.</span> <span class="p">.</span>
 </code></pre></div></div>
 
-<p>Here, we copy all contents from the folder that contains the <em>Dockerfile</em>, i.e., the root directory of our project and it is represented as a dot. However, the <em>Dockerfile</em> is not copied though. The second dot is the destination folder inside the image. Similarly, the dot implies that the copied contents will be stores in the root directory (or /app) of the image.</p>
+<p>Here, we copy all contents from the folder that contains the <em>Dockerfile</em>, i.e., the root directory of our project and it is represented as a dot. However, the <em>Dockerfile</em> is not copied though. The second dot is the destination folder inside the image. Similarly, the dot implies that the copied contents will be stored in the root directory (or /app) of the image.</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">EXPOSE</span> <span class="mi">3000</span>
 </code></pre></div></div>
 
-<p>This instruction simply exposes poprt 3000 so that we can reeach the application from outside the container.</p>
+<p>This instruction simply exposes port 3000 so that we can reeach the application from outside the container.</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">CMD</span><span class="p">[(</span><span class="dl">"</span><span class="s2">node</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">app.js</span><span class="dl">"</span><span class="p">)];</span>
 </code></pre></div></div>
@@ -251,12 +250,12 @@ node app.js
 
 <h3 id="external-images">External Images</h3>
 
-<p>Instead of creating our own image, we can run a container based on external image. A Docker Hub is an image registory which stores repositories of images. These images can be pulled to our local and then used to start a container. An example is demonstrated below.</p>
+<p>Instead of creating our own image, we can run a container based on external image. A Docker Hub is an image registory, which stores repositories of images. These images can be pulled to our local machine and then used to start a container. An example is demonstrated below.</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">docker</span> <span class="nx">run</span> <span class="o">-</span><span class="nx">it</span> <span class="nx">node</span>
 </code></pre></div></div>
 
-<p>Remember that <code class="language-plaintext highlighter-rouge">docker run</code> creates a new container based on an image. In this example, we are using the <em>node</em> image, which we do not have locally. As a result, Docker pulls the image from the Docker Hub and then create a new container based onn the image. The <code class="language-plaintext highlighter-rouge">-it</code> tells Docker to expose an interactive shell from inside the node container to our local machine so that we can interact with the running container.</p>
+<p>Remember that <code class="language-plaintext highlighter-rouge">docker run</code> creates a new container based on an image. In this example, we are using the <em>node</em> image, which we do not have locally. As a result, Docker pulls the image from the Docker Hub and then creates a new container based on the image. The <code class="language-plaintext highlighter-rouge">-it</code> tells Docker to expose an interactive shell from inside the node container to our local machine so that we can interact with the running container.</p>
 
 <h3 id="managing-images-and-containers">Managing Images and Containers</h3>
 

@@ -42,7 +42,7 @@ To get started, follow the steps below to download and then run a sample project
 
 <img src="https://user-images.githubusercontent.com/24963911/169063666-b9f98e75-26fa-4bc3-98c6-09160213a550.png" alt="Getting Started Demo App" style="width:100%;"/>
 
-- To run the application without docker; run the following commands::
+- Run the following commands to start the server of the application:
 
 ```
 npm install
@@ -55,7 +55,7 @@ node app.js
 
 ### Quick Dive into Docker and Container
 
-Here, we containerize the application and then start the container, the complete dockerized application can be found at _Section1/basic_node_app_.
+Here, we containerize the application and then start the container, the complete dockerized application can be found at _Section1/basic-node-app-container_.
 
 1. Create a file at the root project and name it _Dockerfile_
 1. Enter the following set of instructions in the file.
@@ -104,21 +104,20 @@ A Dockerfile is a configuration file, which can be used to create a Docker image
 
 ```js
 FROM node:14
-```
-
+``` 
 Here we specify the base image (_node_ image, version:14). The base image provides underlying OS architecture and other packages that are required to run our application.
 
 ```js
 WORKDIR /app;
 ```
 
-This instruction specifies the root directory for the image. Hence, all the contents of the image will stored in an _app_ folder.
+This instruction specifies the root directory for the image. Hence, all the contents of the image will be stored in the _app_ folder.
 
 ```js
 COPY package*.json /app
 ```
 
-This instruction copies all the files with the name _package\*.json_ to the root directory of image. In our example, both package.json and ackage-lock.json will be copied to oot tdirecory of the image.
+This instruction copies all the files with the name _package\*.json_ to the root directory of the image. In our example, both package.json and package-lock.json will be copied to the root directory of the image.
 
 ```js
 RUN npm install
@@ -130,13 +129,13 @@ This instruction installs all the dependencies that are specified in our .json f
 COPY . .
 ```
 
-Here, we copy all contents from the folder that contains the _Dockerfile_, i.e., the root directory of our project and it is represented as a dot. However, the _Dockerfile_ is not copied though. The second dot is the destination folder inside the image. Similarly, the dot implies that the copied contents will be stores in the root directory (or /app) of the image.
+Here, we copy all contents from the folder that contains the _Dockerfile_, i.e., the root directory of our project and it is represented as a dot. However, the _Dockerfile_ is not copied though. The second dot is the destination folder inside the image. Similarly, the dot implies that the copied contents will be stored in the root directory (or /app) of the image.
 
 ```js
 EXPOSE 3000
 ```
 
-This instruction simply exposes poprt 3000 so that we can reeach the application from outside the container.
+This instruction simply exposes port 3000 so that we can reeach the application from outside the container.
 
 ```js
 CMD[("node", "app.js")];
@@ -166,13 +165,13 @@ This **docker run** command instantiates an image, i.e., it creates a new contai
 
 ### External Images
 
-Instead of creating our own image, we can run a container based on external image. A Docker Hub is an image registory which stores repositories of images. These images can be pulled to our local and then used to start a container. An example is demonstrated below.
+Instead of creating our own image, we can run a container based on external image. A Docker Hub is an image registory, which stores repositories of images. These images can be pulled to our local machine and then used to start a container. An example is demonstrated below.
 
 ```js
 docker run -it node
 ```
 
-Remember that `docker run` creates a new container based on an image. In this example, we are using the _node_ image, which we do not have locally. As a result, Docker pulls the image from the Docker Hub and then create a new container based onn the image. The `-it` tells Docker to expose an interactive shell from inside the node container to our local machine so that we can interact with the running container.
+Remember that `docker run` creates a new container based on an image. In this example, we are using the _node_ image, which we do not have locally. As a result, Docker pulls the image from the Docker Hub and then creates a new container based on the image. The `-it` tells Docker to expose an interactive shell from inside the node container to our local machine so that we can interact with the running container.
 
 ### Managing Images and Containers
 
