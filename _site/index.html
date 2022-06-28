@@ -320,25 +320,36 @@ EXPOSE $PORT
 </code></pre></div></div>
 
 <ul>
-  <li>Run another container with environment variable file, port=8000.</li>
+  <li>Run another container with environment variable file, port=8000. Note that you have to create a file (.env) at the root project directory and then enter <strong>PORT=8000</strong></li>
 </ul>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run -p 3030:8000 --rm -d --env-file .env demo-image:env
 </code></pre></div></div>
+
+<h3 id="sharing-images">Sharing Images</h3>
+<p>Docker images can be shared with your team members, as well as the public and services that you aim to deploy your container to. In this section, we demonstrate how to share and use images with <a href="https://hub.docker.com/">Docker Hub</a>.</p>
+
+<ol>
+  <li>Register with <strong>Docker Hub</strong>, if you do not already have a Docker Hub account.</li>
+  <li>Sign in</li>
+  <li>Create a repository.</li>
+  <li>Push an image to the repository: <code class="language-plaintext highlighter-rouge">docker push &lt;account-name&gt;/&lt;repo-name&gt;:&lt;tage-name&gt;</code></li>
+  <li>Pull an image from the repository: <code class="language-plaintext highlighter-rouge">docker pull &lt;account-name&gt;/&lt;repo-name&gt;:&lt;tage-name&gt;</code></li>
+</ol>
 
 <h2 id="section-3-container-volumes-and-bind-mounts">Section 3: Container Volumes and Bind Mounts</h2>
 
 <p>Docker container runs in isolation and when a container stops, all the data that are contained in the container are removed by default. <a href="https://docs.docker.com/storage/volumes/">Volume</a> is a Docker built in feature, which allows us to persist our data, e.g., user account details. Volumes provide the ability to connect specific filesystem paths of the container back to the host machine. If a directory in the container is mounted, changes in that directory are also seen on the host machine. If we mount that same directory across container restarts, we’d see the same files. Typically, volumes are folders on your host machine hard drive, which are mounted (or made available or mapped) into the containers.
 <img src="https://user-images.githubusercontent.com/24963911/169138298-8765e84e-c26c-440d-9dfe-7af412e3b8c6.png" alt="Docker Volumes" style="width:100%;" /></p>
 
-<p>There are two main types of Docker external storage mechanism: <a href="https://docs.docker.com/storage/volumes/">Volumes</a> and <a href="https://docs.docker.com/storage/bind-mounts/">Bind Mounts</a>. Volumes are completely managed by Docker, while Bind Mounts are managed by us via our local machines. Docker volumes can be an anonymous or named volumes.</p>
+<p>There are two main types of Docker external storage mechanism: <a href="https://docs.docker.com/storage/volumes/">Volumes</a> and <a href="https://docs.docker.com/storage/bind-mounts/">Bind Mounts</a>. Volumes are completely managed by Docker, while Bind Mounts are managed by us via our local machines. Docker volumes can be anonymous or named volumes.</p>
 
 <ol>
   <li>
     <p><strong>Anonymous Volume</strong>: Only Docker knows the name and the location of the volume in your machine. It is specifically created for a single container. It survives after shutdown/restart of a contsiner, unless the container is removed, then the anonymous volume is gone as well. The command below creates an anonymous volume <br />
 <code class="language-plaintext highlighter-rouge">docker run -v/app/data [OTHER OPTIONS] IMAGE</code> <br />
-/app/data represents the data location in the container. Anonymous volume is predominantly used to lock a memory space, e.g., node<em>module, from being
-overriden by bind mount volume. An anonymous can be created in a _Dockerfile</em>, as well as in command line.</p>
+<strong>/app/data</strong> represents the data location in the container. Anonymous volume is predominantly used to lock a memory space, e.g., <em>node_module</em>, from being
+overriden by bind mount volume. An anonymous volume can be created in a <em>Dockerfile</em>, as well as in the command line.</p>
   </li>
   <li>
     <p><strong>Named Volume</strong>: The volume has a name; still, only docker knows its location in your machine. The command below creates a named volume - <strong>data</strong> <br />
@@ -346,7 +357,7 @@ overriden by bind mount volume. An anonymous can be created in a _Dockerfile</em
 Named volume is not tied to a specific container; hence, it survives shutdown/removal of a container. A named volume can be removed via CLI. It can be used to share data across containers. A named volume cannot be specified in a <em>Dockerfile</em>.</p>
   </li>
   <li>
-    <p><strong>Bind Mount</strong>: This external storage binds a known directory in your local machine with another directory in the container. It is often used to bind source code with the container so that the image is not rebuilt after every change in the code. The command below creates a bind mount which connects a known directory (/app/to/code) in our local machine to a container directory (/app/code)<br />
+    <p><strong>Bind Mount</strong>: This external storage binds a known directory in your local machine with another directory in the container. It is often used to bind source code with the container so that the image is not rebuilt after every change in the code. The command below creates a bind mount, which connects a known directory (/path/to/code) in our local machine to a container directory (/app/code)<br />
 <code class="language-plaintext highlighter-rouge">docker run -v /path/to/code:/app/code [OTHER OPTIONS] IMAGE</code> <br />
 Bind Mount is similar to named volume, except that its location is known to us, i.e., we can physically locate the directory in our local machine. Note that bind mount requires an absolute path on your local machine, not a relative path or use <code class="language-plaintext highlighter-rouge">-v $(pwd):/app</code> for macOS and <code class="language-plaintext highlighter-rouge">-v "%cd%":/app</code> for Windows.</p>
   </li>
@@ -357,9 +368,33 @@ Volumes that need to be written have to be overriden by bind mount volume. Note 
   </li>
 </ol>
 
-<h2 id="section-4-multi-container-applications-networking">Section 4: Multi Container Applications (Networking)</h2>
+<h3 id="hands-on-exercise">Hands-On Exercise</h3>
+<p>Here, we demonstrate Docker Volumes with a sample node.js application.</p>
+<ol>
+  <li>Clone the <a href="https://github.com/Hyacinth-Ali/Docker-Kubernetes-Tutorial">sample project</a> and then navigate to <em>Section3/feedback-volume</em>.</li>
+  <li>Run the project as a stand-alone server, i.e., without dockerization of the application.</li>
+  <li>Create a Docker image from the application</li>
+  <li>Run a container based on the image.</li>
+  <li>Run a container with an anonymous volume, restarts the container, and then observe what happens.</li>
+  <li>Run a container with a named volume, restarts the container, and then observe what happens.</li>
+  <li>Run a container with a bind mount, modify the html source code, and then observe what happens.</li>
+  <li>Play around with anonymous and named volumes, as well as bind mounts.</li>
+</ol>
 
-<p>So far, we have been working with single container apps. However, what if we want to add a database to our application stack, e.g., MySQL. The following question often arises - “Where will MySQL run? Install it in the same container or run it separately?” In general, each container should do one thing and do it well. Hence, it is preferred to separate the processes.</p>
+<h3 id="key-docker-commands">Key Docker Commands</h3>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">docker run -v /path/in/container IMAGE</code> : Create an Anonymous Volume inside a Container</li>
+  <li><code class="language-plaintext highlighter-rouge">docker run -v some-name:/path/in/container IMAGE</code> : Create a Named Volume (named some-name ) inside a Container</li>
+  <li><code class="language-plaintext highlighter-rouge">docker run -v /path/on/your/host/machine:path/in/container IMAGE</code> : Create a Bind Mount and connect a local path on your host machine to some path in the Container</li>
+  <li><code class="language-plaintext highlighter-rouge">docker volume ls</code> : List all currently active / stored Volumes (by all Containers)</li>
+  <li><code class="language-plaintext highlighter-rouge">docker volume create VOL_NAME</code> : Create a new (Named) Volume named VOL_NAME . You typically don’t need to do that, since Docker creates them automatically for you if they don’t exist when running a container</li>
+  <li><code class="language-plaintext highlighter-rouge">docker volume rm VOL_NAME</code> : Remove a Volume by it’s name (or ID)</li>
+  <li><code class="language-plaintext highlighter-rouge">docker volume prune</code> : Remove all unused Volumes (i.e. not connected to a currently running or stopped container)</li>
+</ul>
+
+<h2 id="section-4-multi-container-applications">Section 4: Multi Container Applications</h2>
+
+<p>So far, we have been working with single container applications. However, what if we want to add a database to our application stack, e.g., MySQL. The following question often arises - “Where will MySQL run? Install it in the same container or run it separately?” In general, each container should do one thing and do it well. Hence, it is preferred to separate the processes.</p>
 
 <p>Remember that containers, by default, run in isolation and don’t know anything about other processes or containers on the same machine. So, how do we allow one container to talk to another? The answer is networking.</p>
 
@@ -368,13 +403,34 @@ Volumes that need to be written have to be overriden by bind mount volume. Note 
 <ol>
   <li>Containers talking to external application, e.g., an application running in the web. This type of communication doesn’t require any special configuration or setup. It works as though the application is not dockerized</li>
   <li>Container talking to the local machine, e.g., database running in the local machine. Here, you are required to create a network that comprises our dockerized application and the dockerized database process. This, however, requires a simple change in your url that conects to the database, <code class="language-plaintext highlighter-rouge">localhost</code> -&gt; <code class="language-plaintext highlighter-rouge">host.docker.internal</code>. Docker understands the command <code class="language-plaintext highlighter-rouge">host.docker.internal</code>, which it translates to the IP address of your host machine.</li>
-  <li>Container talking to another container, e.g., database running in a container. Containers can communicte between each with IP address or via a network with the name of the container.</li>
+  <li>Container talking to another container, e.g., database running in a container. Containers can communicte between each with IP address or via a network with the name of the container.
+    <ul>
+      <li>Use the following command to retrieve the IP address of a running container <br />
+  <code class="language-plaintext highlighter-rouge">docker inspect NAME|ID</code></li>
+    </ul>
+  </li>
 </ol>
 
-<p>App container can communicate with other container, e.g., mongodb, with the ip address of the mongodb container. The IP address can be gotten with docker container inspect mongodb where mongodb is the name of the mongodb container. The inspect command prints several details including the IP address. This IP Address can be plugged in the url that is used to connect to the data base.</p>
+<p>Application container can communicate with other container, e.g., mongodb, with the IP address of the mongodb container. The IP address can be gotten with <code class="language-plaintext highlighter-rouge">docker container inspect mongodb</code> where mongodb is the name of the mongodb container. The inspect command prints several details including the IP address. This IP Address can be plugged in the url that is used to connect to the database.</p>
 
 <p>Containers can also communicate between one another with network. Docker creates network as follows:
-docker network create <name> Then use the name while running the container as --network network-name</name></p>
+<code class="language-plaintext highlighter-rouge">docker network create &lt;network-name&gt;</code> Then use the name while running the container as <em>–network network-name</em></p>
+
+<h4 id="hands-on-exercise-1">Hands-On Exercise</h4>
+<p>Here, we demonstrate cross-container communication with a sample node.js application.</p>
+<ol>
+  <li>Clone the <a href="https://github.com/Hyacinth-Ali/Docker-Kubernetes-Tutorial">sample project</a> and then navigate to <em>Section4/container-network-starting</em>.</li>
+  <li>Run the project as a stand-alone server, i.e., without dockerization of the application. This works if you have mongodb running in your local machine.
+    <ul>
+      <li>Otherwise, remove the database connection to run the application.</li>
+    </ul>
+  </li>
+  <li>Create a Docker image from the application.</li>
+  <li>Run a container based on the image. Running the container crashes because the container is not configured to communicate with the local machine.</li>
+  <li>Replace <strong>localhost</strong> with <strong>host.docker.internal</strong> in the database url to allow containers based on the appliocation communicate with the local machine, as well as the MongoDb running in the local machine.</li>
+  <li>Run mongo container</li>
+  <li>Connect the container to the mongodb with the mongodb IP address</li>
+</ol>
 
 <h3 id="container-networking">Container Networking</h3>
 
@@ -393,6 +449,8 @@ You can specify the subnet, the IP address range, the gateway, and other options
 <p>Unlike volumes, Docker requires to create a network before it can be used. <code class="language-plaintext highlighter-rouge">docker network ls</code> lists all the existing network in your local machine. With a network created, a container can be run based as a part of the network. Containers that are part of the network can communicate with just the name of the container.
 <code class="language-plaintext highlighter-rouge">docker run --network my_network image_name ...</code>
 Recall that you need to edit your database url, e.g., <code class="language-plaintext highlighter-rouge">localhost</code> -&gt; <code class="language-plaintext highlighter-rouge">container_name</code></p>
+
+<h2 id="section-5">Section 5</h2>
 
 <h3 id="docker-compose">Docker Compose</h3>
 

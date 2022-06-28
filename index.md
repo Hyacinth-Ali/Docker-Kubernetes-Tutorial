@@ -220,29 +220,38 @@ docker build -t demo-image:env .
 docker run -p 3000:8000 --rm -d --env PORT=8000  demo-image:env
 ```
 
-- Run another container with environment variable file, port=8000.
+- Run another container with environment variable file, port=8000. Note that you have to create a file (.env) at the root project directory and then enter **PORT=8000** 
 
 ```
 docker run -p 3030:8000 --rm -d --env-file .env demo-image:env
 ```
+
+### Sharing Images
+Docker images can be shared with your team members, as well as the public and services that you aim to deploy your container to. In this section, we demonstrate how to share and use images with [Docker Hub](https://hub.docker.com/).
+
+1. Register with **Docker Hub**, if you do not already have a Docker Hub account.
+1. Sign in
+1. Create a repository.
+1. Push an image to the repository: ```docker push <account-name>/<repo-name>:<tage-name>```
+1. Pull an image from the repository: ```docker pull <account-name>/<repo-name>:<tage-name>``` 
 
 ## Section 3: Container Volumes and Bind Mounts
 
 Docker container runs in isolation and when a container stops, all the data that are contained in the container are removed by default. [Volume](https://docs.docker.com/storage/volumes/) is a Docker built in feature, which allows us to persist our data, e.g., user account details. Volumes provide the ability to connect specific filesystem paths of the container back to the host machine. If a directory in the container is mounted, changes in that directory are also seen on the host machine. If we mount that same directory across container restarts, we’d see the same files. Typically, volumes are folders on your host machine hard drive, which are mounted (or made available or mapped) into the containers.
 <img src="https://user-images.githubusercontent.com/24963911/169138298-8765e84e-c26c-440d-9dfe-7af412e3b8c6.png" alt="Docker Volumes" style="width:100%;"/>
 
-There are two main types of Docker external storage mechanism: [Volumes](https://docs.docker.com/storage/volumes/) and [Bind Mounts](https://docs.docker.com/storage/bind-mounts/). Volumes are completely managed by Docker, while Bind Mounts are managed by us via our local machines. Docker volumes can be an anonymous or named volumes.
+There are two main types of Docker external storage mechanism: [Volumes](https://docs.docker.com/storage/volumes/) and [Bind Mounts](https://docs.docker.com/storage/bind-mounts/). Volumes are completely managed by Docker, while Bind Mounts are managed by us via our local machines. Docker volumes can be anonymous or named volumes.
 
 1. **Anonymous Volume**: Only Docker knows the name and the location of the volume in your machine. It is specifically created for a single container. It survives after shutdown/restart of a contsiner, unless the container is removed, then the anonymous volume is gone as well. The command below creates an anonymous volume <br>
    `docker run -v/app/data [OTHER OPTIONS] IMAGE` <br>
-   /app/data represents the data location in the container. Anonymous volume is predominantly used to lock a memory space, e.g., node*module, from being
-   overriden by bind mount volume. An anonymous can be created in a \_Dockerfile*, as well as in command line.
+   **/app/data** represents the data location in the container. Anonymous volume is predominantly used to lock a memory space, e.g., _node_module_, from being
+   overriden by bind mount volume. An anonymous volume can be created in a _Dockerfile_, as well as in the command line.
 
 1. **Named Volume**: The volume has a name; still, only docker knows its location in your machine. The command below creates a named volume - **data** <br />
    `docker run -v data:/app/data [OTHER OPTIONS] IMAGE` <br>
    Named volume is not tied to a specific container; hence, it survives shutdown/removal of a container. A named volume can be removed via CLI. It can be used to share data across containers. A named volume cannot be specified in a _Dockerfile_.
 
-1. **Bind Mount**: This external storage binds a known directory in your local machine with another directory in the container. It is often used to bind source code with the container so that the image is not rebuilt after every change in the code. The command below creates a bind mount which connects a known directory (/app/to/code) in our local machine to a container directory (/app/code)<br />
+1. **Bind Mount**: This external storage binds a known directory in your local machine with another directory in the container. It is often used to bind source code with the container so that the image is not rebuilt after every change in the code. The command below creates a bind mount, which connects a known directory (/path/to/code) in our local machine to a container directory (/app/code)<br />
    `docker run -v /path/to/code:/app/code [OTHER OPTIONS] IMAGE` <br />
    Bind Mount is similar to named volume, except that its location is known to us, i.e., we can physically locate the directory in our local machine. Note that bind mount requires an absolute path on your local machine, not a relative path or use `-v $(pwd):/app` for macOS and `-v "%cd%":/app` for Windows.
 
@@ -250,9 +259,29 @@ There are two main types of Docker external storage mechanism: [Volumes](https:/
    `docker run -v /path/to/code:/app/code ...:ro` <br />
    Volumes that need to be written have to be overriden by bind mount volume. Note that this has to be specified in the docker run, not in docker file.
 
-## Section 4: Multi Container Applications (Networking)
+### Hands-On Exercise
+Here, we demonstrate Docker Volumes with a sample node.js application.
+1. Clone the [sample project](https://github.com/Hyacinth-Ali/Docker-Kubernetes-Tutorial) and then navigate to _Section3/feedback-volume_.
+1. Run the project as a stand-alone server, i.e., without dockerization of the application.
+1. Create a Docker image from the application
+1. Run a container based on the image.
+1. Run a container with an anonymous volume, restarts the container, and then observe what happens.
+1. Run a container with a named volume, restarts the container, and then observe what happens.
+1. Run a container with a bind mount, modify the html source code, and then observe what happens.
+1. Play around with anonymous and named volumes, as well as bind mounts.
 
-So far, we have been working with single container apps. However, what if we want to add a database to our application stack, e.g., MySQL. The following question often arises - “Where will MySQL run? Install it in the same container or run it separately?” In general, each container should do one thing and do it well. Hence, it is preferred to separate the processes.
+### Key Docker Commands
+- ```docker run -v /path/in/container IMAGE``` : Create an Anonymous Volume inside a Container
+- ```docker run -v some-name:/path/in/container IMAGE``` : Create a Named Volume (named some-name ) inside a Container
+- ```docker run -v /path/on/your/host/machine:path/in/container IMAGE``` : Create a Bind Mount and connect a local path on your host machine to some path in the Container
+- ```docker volume ls``` : List all currently active / stored Volumes (by all Containers)
+- ```docker volume create VOL_NAME``` : Create a new (Named) Volume named VOL_NAME . You typically don't need to do that, since Docker creates them automatically for you if they don't exist when running a container
+- ```docker volume rm VOL_NAME``` : Remove a Volume by it's name (or ID)
+- ```docker volume prune``` : Remove all unused Volumes (i.e. not connected to a currently running or stopped container)
+
+## Section 4: Multi Container Applications
+
+So far, we have been working with single container applications. However, what if we want to add a database to our application stack, e.g., MySQL. The following question often arises - “Where will MySQL run? Install it in the same container or run it separately?” In general, each container should do one thing and do it well. Hence, it is preferred to separate the processes.
 
 Remember that containers, by default, run in isolation and don’t know anything about other processes or containers on the same machine. So, how do we allow one container to talk to another? The answer is networking.
 
@@ -261,11 +290,24 @@ Here, we present three types of container communication:
 1. Containers talking to external application, e.g., an application running in the web. This type of communication doesn't require any special configuration or setup. It works as though the application is not dockerized
 1. Container talking to the local machine, e.g., database running in the local machine. Here, you are required to create a network that comprises our dockerized application and the dockerized database process. This, however, requires a simple change in your url that conects to the database, `localhost` -> `host.docker.internal`. Docker understands the command `host.docker.internal`, which it translates to the IP address of your host machine.
 1. Container talking to another container, e.g., database running in a container. Containers can communicte between each with IP address or via a network with the name of the container.
+  - Use the following command to retrieve the IP address of a running container <br>
+  ```docker inspect NAME|ID```
 
-App container can communicate with other container, e.g., mongodb, with the ip address of the mongodb container. The IP address can be gotten with docker container inspect mongodb where mongodb is the name of the mongodb container. The inspect command prints several details including the IP address. This IP Address can be plugged in the url that is used to connect to the data base.
+Application container can communicate with other container, e.g., mongodb, with the IP address of the mongodb container. The IP address can be gotten with ```docker container inspect mongodb``` where mongodb is the name of the mongodb container. The inspect command prints several details including the IP address. This IP Address can be plugged in the url that is used to connect to the database.
 
 Containers can also communicate between one another with network. Docker creates network as follows:
-docker network create <name> Then use the name while running the container as --network network-name
+```docker network create <network-name>``` Then use the name while running the container as _--network network-name_
+
+#### Hands-On Exercise
+Here, we demonstrate cross-container communication with a sample node.js application.
+1. Clone the [sample project](https://github.com/Hyacinth-Ali/Docker-Kubernetes-Tutorial) and then navigate to _Section4/container-network-starting_.
+1. Run the project as a stand-alone server, i.e., without dockerization of the application. This works if you have mongodb running in your local machine.  
+  - Otherwise, remove the database connection to run the application.
+1. Create a Docker image from the application.
+1. Run a container based on the image. Running the container crashes because the container is not configured to communicate with the local machine.
+1. Replace **localhost** with **host.docker.internal** in the database url to allow containers based on the appliocation communicate with the local machine, as well as the MongoDb running in the local machine.
+1. Run mongo container
+1. Connect the container to the mongodb with the mongodb IP address
 
 ### Container Networking
 
@@ -284,6 +326,8 @@ docker network disconnect my-network my-demo
 Unlike volumes, Docker requires to create a network before it can be used. `docker network ls` lists all the existing network in your local machine. With a network created, a container can be run based as a part of the network. Containers that are part of the network can communicate with just the name of the container.
 `docker run --network my_network image_name ...`
 Recall that you need to edit your database url, e.g., `localhost` -> `container_name`
+
+## Section 5
 
 ### Docker Compose
 
