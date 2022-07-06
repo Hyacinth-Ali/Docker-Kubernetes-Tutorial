@@ -403,7 +403,7 @@ Volumes that need to be written have to be overriden by bind mount volume. Note 
 <ol>
   <li>Containers talking to external application, e.g., an application running in the web. This type of communication doesn’t require any special configuration or setup. It works as though the application is not dockerized</li>
   <li>Container talking to the local machine, e.g., database running in the local machine. Here, you are required to create a network that comprises our dockerized application and the dockerized database process. This, however, requires a simple change in your url that conects to the database, <code class="language-plaintext highlighter-rouge">localhost</code> -&gt; <code class="language-plaintext highlighter-rouge">host.docker.internal</code>. Docker understands the command <code class="language-plaintext highlighter-rouge">host.docker.internal</code>, which it translates to the IP address of your host machine.</li>
-  <li>Container talking to another container, e.g., database running in a container. Containers can communicte between each with IP address or via a network with the name of the container.
+  <li>Container talking to another container, e.g., database running in a container. Containers can communicte between each other with IP address or via a network with the name of the container.
     <ul>
       <li>Use the following command to retrieve the IP address of a running container <br />
   <code class="language-plaintext highlighter-rouge">docker inspect NAME|ID</code></li>
@@ -414,7 +414,7 @@ Volumes that need to be written have to be overriden by bind mount volume. Note 
 <p>Application container can communicate with other container, e.g., mongodb, with the IP address of the mongodb container. The IP address can be gotten with <code class="language-plaintext highlighter-rouge">docker container inspect mongodb</code> where mongodb is the name of the mongodb container. The inspect command prints several details including the IP address. This IP Address can be plugged in the url that is used to connect to the database.</p>
 
 <p>Containers can also communicate between one another with network. Docker creates network as follows:
-<code class="language-plaintext highlighter-rouge">docker network create &lt;network-name&gt;</code> Then use the name while running the container as <em>–network network-name</em></p>
+<code class="language-plaintext highlighter-rouge">docker network create &lt;network-name&gt;</code> Then use the network name while running the container as <em>–network network-name</em></p>
 
 <h4 id="hands-on-exercise-1">Hands-On Exercise</h4>
 <p>Here, we demonstrate cross-container communication with a sample node.js application.</p>
@@ -436,7 +436,7 @@ Volumes that need to be written have to be overriden by bind mount volume. Note 
 
 <p><a href="https://docs.docker.com/network/">Docker Network</a> allows containers to communicate between each other and IPs are automatically resolved. The command below creates a network <br />
 <code class="language-plaintext highlighter-rouge">docker network create my_network</code>
-This is also called <a href="https://docs.docker.com/network/bridge/">user defined bridge network</a>
+This is also called <a href="https://docs.docker.com/network/bridge/">user defined bridge network</a>.
 You can specify the subnet, the IP address range, the gateway, and other options. See the docker network create reference or the output of <code class="language-plaintext highlighter-rouge">docker network create --help</code> for details.</p>
 
 <p>Use the <code class="language-plaintext highlighter-rouge">docker network rm</code> command to remove a user-defined bridge network. If containers are currently connected to the network, disconnect them first. <br />
@@ -444,7 +444,7 @@ You can specify the subnet, the IP address range, the gateway, and other options
 
 <p>To disconnect a running container from a user-defined bridge network, use the <code class="language-plaintext highlighter-rouge">docker network disconnect</code> command. The following command disconnects the my-demo container from the my-network network.</p>
 
-<p>docker network disconnect my-network my-demo</p>
+<p><code class="language-plaintext highlighter-rouge">docker network disconnect my-network my-demo</code></p>
 
 <p>Unlike volumes, Docker requires to create a network before it can be used. <code class="language-plaintext highlighter-rouge">docker network ls</code> lists all the existing network in your local machine. With a network created, a container can be run based as a part of the network. Containers that are part of the network can communicate with just the name of the container.
 <code class="language-plaintext highlighter-rouge">docker run --network my_network image_name ...</code>

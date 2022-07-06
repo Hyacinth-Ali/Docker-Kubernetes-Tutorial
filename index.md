@@ -289,14 +289,14 @@ Here, we present three types of container communication:
 
 1. Containers talking to external application, e.g., an application running in the web. This type of communication doesn't require any special configuration or setup. It works as though the application is not dockerized
 1. Container talking to the local machine, e.g., database running in the local machine. Here, you are required to create a network that comprises our dockerized application and the dockerized database process. This, however, requires a simple change in your url that conects to the database, `localhost` -> `host.docker.internal`. Docker understands the command `host.docker.internal`, which it translates to the IP address of your host machine.
-1. Container talking to another container, e.g., database running in a container. Containers can communicte between each with IP address or via a network with the name of the container.
+1. Container talking to another container, e.g., database running in a container. Containers can communicte between each other with IP address or via a network with the name of the container.
   - Use the following command to retrieve the IP address of a running container <br>
   ```docker inspect NAME|ID```
 
 Application container can communicate with other container, e.g., mongodb, with the IP address of the mongodb container. The IP address can be gotten with ```docker container inspect mongodb``` where mongodb is the name of the mongodb container. The inspect command prints several details including the IP address. This IP Address can be plugged in the url that is used to connect to the database.
 
 Containers can also communicate between one another with network. Docker creates network as follows:
-```docker network create <network-name>``` Then use the name while running the container as _--network network-name_
+```docker network create <network-name>``` Then use the network name while running the container as _--network network-name_
 
 #### Hands-On Exercise
 Here, we demonstrate cross-container communication with a sample node.js application.
@@ -313,7 +313,7 @@ Here, we demonstrate cross-container communication with a sample node.js applica
 
 [Docker Network](https://docs.docker.com/network/) allows containers to communicate between each other and IPs are automatically resolved. The command below creates a network <br>
 `docker network create my_network`
-This is also called [user defined bridge network](https://docs.docker.com/network/bridge/)
+This is also called [user defined bridge network](https://docs.docker.com/network/bridge/).
 You can specify the subnet, the IP address range, the gateway, and other options. See the docker network create reference or the output of `docker network create --help` for details.
 
 Use the `docker network rm` command to remove a user-defined bridge network. If containers are currently connected to the network, disconnect them first. <br>
@@ -321,7 +321,7 @@ Use the `docker network rm` command to remove a user-defined bridge network. If 
 
 To disconnect a running container from a user-defined bridge network, use the `docker network disconnect` command. The following command disconnects the my-demo container from the my-network network.
 
-docker network disconnect my-network my-demo
+```docker network disconnect my-network my-demo```
 
 Unlike volumes, Docker requires to create a network before it can be used. `docker network ls` lists all the existing network in your local machine. With a network created, a container can be run based as a part of the network. Containers that are part of the network can communicate with just the name of the container.
 `docker run --network my_network image_name ...`
